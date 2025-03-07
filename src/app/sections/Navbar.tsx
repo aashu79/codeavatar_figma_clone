@@ -5,19 +5,19 @@ import SearchBar from "../appComponents/navbar/SearchBar";
 
 const Navbar = () => {
   return (
-    <div className="flex justify-between items-center  mx-[40px] my-[16px]  ">
+    <nav className="flex justify-between items-center  mx-[40px] my-[16px]  ">
       {/* right part */}
-      <div className="flex items-center gap-[64px]">
+      <section className="flex items-center gap-[64px]">
         <Logo />
         <SearchBar />
         <MenuItems />
-      </div>
+      </section>
 
       {/* left part */}
-      <div>
+      <section>
         <Button>Button</Button>
-      </div>
-    </div>
+      </section>
+    </nav>
   );
 };
 

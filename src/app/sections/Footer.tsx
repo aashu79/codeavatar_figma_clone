@@ -53,7 +53,7 @@ const Footer = () => {
     <footer className=" border-t border-b bg-white">
       <div className=" my-[32px] mx-[48px] ">
         {/* Main Footer Content */}
-        <div className="flex gap-[376px]  border-gray-200">
+        <section className="flex gap-[376px]  border-gray-200">
           {/* Logo and Description Column */}
           <div className="w-[376px]">
             <div className="flex items-center mb-4">
@@ -82,7 +82,7 @@ const Footer = () => {
 
           {/* Columns Section */}
 
-          <div className="grid grid-cols-3 gap-[284px]  col-span-3">
+          <section className="grid grid-cols-3 gap-[284px]  col-span-3">
             {columns.map((column, columnIndex) => (
               <div className="col-span-1 " key={columnIndex}>
                 <h3 className="font-medium text-gray-800 mb-4">
@@ -97,11 +97,11 @@ const Footer = () => {
                 </ul>
               </div>
             ))}
-          </div>
-        </div>
+          </section>
+        </section>
 
         {/* Copyright and Legal Links */}
-        <div className="flex justify-between items-center pt-6 border-t-[2px] mt-[40px]">
+        <section className="flex justify-between items-center pt-6 border-t-[2px] mt-[40px]">
           <div className="text-gray-600 text-sm">
             © Productname 2025. All rights reserved
           </div>
@@ -116,7 +116,7 @@ const Footer = () => {
               </a>
             ))}
           </div>
-        </div>
+        </section>
       </div>
     </footer>
   );

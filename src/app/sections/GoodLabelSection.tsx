@@ -10,15 +10,15 @@ interface sectionProps {
 
 const GoodLabelSection = ({ isButtonVisible, data }: sectionProps) => {
   return (
-    <div className="my-[32px] mx-[48px] ">
-      <div className="flex justify-center items-center">
+    <section className="my-[32px] mx-[48px] ">
+      <header className="flex justify-center items-center">
         <div className="flex gap-2 items-center mx-auto">
           <h1>A Good Label</h1>
           <Button className="bg-white text-black border-gray-300 border-[1px]">
             Value
           </Button>
         </div>
-      </div>
+      </header>
 
       {/* card section  */}
 
@@ -29,18 +29,17 @@ const GoodLabelSection = ({ isButtonVisible, data }: sectionProps) => {
             title={card.title}
             description={card.description}
             isHighlighted={card.isHighlighted}
-            imageUrl={card.imageUrl}
           />
         ))}
       </div>
-      <div className="flex justify-center items-center">
+      <footer className="flex justify-center items-center">
         {isButtonVisible && (
           <Button className="bg-white h-[56px] w-[129px]  py-[16px] px-[39px] text-black rounded-[40px] hover:bg-gray-200 transition-colors hover:cursor-pointer">
             Button
           </Button>
         )}
-      </div>
-    </div>
+      </footer>
+    </section>
   );
 };
 

@@ -3,7 +3,7 @@ import { Button } from "../../components/ui/button";
 
 const Banner = () => {
   return (
-    <div className="bg-black my-[32px] mx-[48px]  h-64 relative overflow-hidden  rounded-[10px]">
+    <section className="bg-black my-[32px] mx-[48px]  h-64 relative overflow-hidden  rounded-[10px]">
       {/* Left text content */}
       <div className="absolute left-20 top-20 z-10">
         <h2 className="text-white text-3xl font-semibold">
@@ -49,7 +49,7 @@ const Banner = () => {
           }}
         ></div>
       </div>
-    </div>
+    </section>
   );
 };
 
