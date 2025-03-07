@@ -82,9 +82,9 @@ const Footer = () => {
 
           {/* Columns Section */}
 
-          <section className="grid grid-cols-3 gap-[284px]  col-span-3">
+          <section className="grid grid-cols-3  gap-[120px]  ">
             {columns.map((column, columnIndex) => (
-              <div className="col-span-1 " key={columnIndex}>
+              <div className="w-full" key={columnIndex}>
                 <h3 className="font-medium text-gray-800 mb-4">
                   {column.title}
                 </h3>
