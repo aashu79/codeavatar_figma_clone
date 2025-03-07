@@ -51,7 +51,7 @@ const Footer = () => {
 
   return (
     <footer className=" border-t border-b bg-white">
-      <div className=" mx-auto px-10 py-8">
+      <div className=" my-[32px] mx-[48px] ">
         {/* Main Footer Content */}
         <div className="flex gap-[376px]  border-gray-200">
           {/* Logo and Description Column */}
@@ -82,7 +82,7 @@ const Footer = () => {
 
           {/* Columns Section */}
 
-          <div className="grid grid-cols-3 gap-[130px] col-span-3">
+          <div className="grid grid-cols-3 gap-[284px]  col-span-3">
             {columns.map((column, columnIndex) => (
               <div className="col-span-1 " key={columnIndex}>
                 <h3 className="font-medium text-gray-800 mb-4">

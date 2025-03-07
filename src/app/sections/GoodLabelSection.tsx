@@ -10,17 +10,19 @@ interface sectionProps {
 
 const GoodLabelSection = ({ isButtonVisible, data }: sectionProps) => {
   return (
-    <div className="my-[32px] mx-auto w-full">
-      <div className="flex gap-2 items-center mx-auto w-[20%]">
-        <h1>A Good Label</h1>
-        <Button className="bg-white text-black border-gray-300 border-[1px]">
-          Value
-        </Button>
+    <div className="my-[32px] mx-[48px] ">
+      <div className="flex justify-center items-center">
+        <div className="flex gap-2 items-center mx-auto">
+          <h1>A Good Label</h1>
+          <Button className="bg-white text-black border-gray-300 border-[1px]">
+            Value
+          </Button>
+        </div>
       </div>
 
       {/* card section  */}
 
-      <div className="flex flex-wrap gap-4 mt-[32px]  justify-center">
+      <div className="flex flex-wrap gap-[24px] my-[32px]  justify-center">
         {data?.map((card, index) => (
           <Card
             key={index}

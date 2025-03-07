@@ -28,12 +28,11 @@ const MenuItems = () => {
   return (
     <div className="flex items-center gap-[25px]">
       {menuItems.map((item) => (
-        <div
-          key={item.id}
-          className="flex items-center cursor-pointer hover:bg-gray-100 px-2 py-1 rounded-md"
-        >
-          <p className="text-sm ">{item.title}</p>
-          {item.icon}
+        <div key={item.id} className="py-[8px] px-[12px] hover:bg-gray-200">
+          <div className="flex items-center cursor-pointer  rounded-md">
+            <p className="text-sm ">{item.title}</p>
+            {item.icon && <span>{item.icon}</span>}
+          </div>
         </div>
       ))}
     </div>

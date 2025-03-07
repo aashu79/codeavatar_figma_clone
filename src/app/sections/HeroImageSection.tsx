@@ -2,7 +2,7 @@ import "./style.css";
 
 const HeroImageSection = () => {
   return (
-    <div className="background-image w-[95%] h-[148px] rounded-[12px] relative mx-auto">
+    <div className="background-image  h-[148px] rounded-[12px] mx-[40px] my-[16px] relative ">
       <div className="absolute top-2 right-2 bg-black/70 rounded-md p-2 cursor-pointer hover:bg-black/40 transition-colors">
         <div className="w-4 h-4 relative">
           <div

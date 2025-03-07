@@ -3,7 +3,7 @@ import { CardProps } from "../../../types/globalTypes";
 
 const Card = ({ title, description, isHighlighted }: CardProps) => {
   return (
-    <div className="rounded-lg overflow-hidden  w-[330px] h-[409px]">
+    <div className="rounded-lg overflow-hidden  w-[438px] h-[409px]">
       <div
         className={`p-6 shadow-sm  ${
           isHighlighted ? "bg-orange-100" : "bg-white"
