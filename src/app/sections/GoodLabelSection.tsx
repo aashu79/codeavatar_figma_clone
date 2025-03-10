@@ -22,7 +22,7 @@ const GoodLabelSection = ({ isButtonVisible, data }: sectionProps) => {
 
       {/* card section  */}
 
-      <div className="flex flex-wrap gap-[24px] my-[32px]  justify-center">
+      <div className="grid grid-cols-4 flex-wrap gap-[24px] my-[32px]  justify-center">
         {data?.map((card, index) => (
           <Card
             key={index}

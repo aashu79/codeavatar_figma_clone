@@ -8,7 +8,7 @@ import {
 
 const Card = ({ title, description, isHighlighted }: CardProps) => {
   return (
-    <CardComponent className="rounded-lg bg-[#f8f8f8] border-none shadow-none overflow-hidden w-[23.5%] max-w-[438px] max-h-[409px]">
+    <CardComponent className="rounded-lg bg-[#f8f8f8] border-none shadow-none overflow-hidden w-full mx-auto max-w-[438px] max-h-[409px]">
       <CardHeader
         className={`p-6 shadow-sm  ${
           isHighlighted ? "bg-orange-100" : "bg-white"
