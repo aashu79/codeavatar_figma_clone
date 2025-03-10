@@ -10,7 +10,7 @@ interface sectionProps {
 
 const GoodLabelSection = ({ isButtonVisible, data }: sectionProps) => {
   return (
-    <section className="my-[32px] mx-[48px] ">
+    <section className="my-[32px] mx-[40px]  ">
       <header className="flex justify-center items-center">
         <div className="flex gap-2 items-center mx-auto">
           <h1>A Good Label</h1>

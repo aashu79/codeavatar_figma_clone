@@ -1,21 +1,26 @@
 import React from "react";
 import { CardProps } from "../../../types/globalTypes";
+import {
+  Card as CardComponent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
 
 const Card = ({ title, description, isHighlighted }: CardProps) => {
   return (
-    <div className="rounded-lg overflow-hidden w-[438px] h-[409px]">
-      <header
+    <CardComponent className="rounded-lg bg-[#f8f8f8] border-none shadow-none overflow-hidden w-[23.5%] max-w-[438px] max-h-[409px]">
+      <CardHeader
         className={`p-6 shadow-sm  ${
           isHighlighted ? "bg-orange-100" : "bg-white"
         }`}
       >
-        <img
+        <div
           className={`w-[100%] h-[180px] my-[20px]  mx-auto ${
             isHighlighted ? "bg-white" : "bg-gray-200"
           }`}
         />
-      </header>
-      <footer className="flex flex-col items-start p-2">
+      </CardHeader>
+      <CardFooter className="flex flex-col items-start p-2">
         <div className="flex items-center justify-start mb-1 ">
           <h3 className="text-lg font-medium text-gray-900">{title}</h3>
           {isHighlighted && (
@@ -25,8 +30,8 @@ const Card = ({ title, description, isHighlighted }: CardProps) => {
           )}
         </div>
         <p className="text-sm text-gray-600">{description}</p>
-      </footer>
-    </div>
+      </CardFooter>
+    </CardComponent>
   );
 };
 
