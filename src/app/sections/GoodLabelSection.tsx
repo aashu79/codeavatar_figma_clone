@@ -14,7 +14,7 @@ const GoodLabelSection = ({ isButtonVisible, data }: sectionProps) => {
       <header className="flex justify-center items-center">
         <div className="flex gap-2 items-center mx-auto">
           <h1>A Good Label</h1>
-          <Button className="bg-white text-black border-gray-300 border-[1px]">
+          <Button className="bg-white text-black border-gray-300 border-[1px] hover:text-white hover:cursor-pointer">
             Value
           </Button>
         </div>

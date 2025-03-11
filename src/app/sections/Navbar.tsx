@@ -7,7 +7,7 @@ const Navbar = () => {
   return (
     <nav className="flex justify-between items-center  mx-[40px] my-[16px]  ">
       {/* right part */}
-      <section className="flex items-center gap-[64px]">
+      <section className="flex items-center gap-[4rem]">
         <Logo />
         <SearchBar />
         <MenuItems />
