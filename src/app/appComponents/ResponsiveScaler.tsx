@@ -6,13 +6,16 @@ interface ResponsiveScalerProps extends React.PropsWithChildren {}
 const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
   useEffect(() => {
     const handleScaling = () => {
-      const rootElement = document.querySelector<HTMLElement>("#__next");
+      // For Next.js App Router, target the main element rather than #__next
+      const rootElement =
+        document.querySelector<HTMLElement>("main.app-content");
       const body = document.body;
 
       if (!rootElement || !body) return;
 
       const isMobile = window.innerWidth <= 650;
-      const scaleRatio = isMobile ? 1 : Math.min(window.innerWidth / 1920);
+      // Adjust baseline from 1920 to something more reasonable like 1440
+      const scaleRatio = isMobile ? 1 : Math.min(window.innerWidth / 1440, 1);
 
       // Set CSS custom properties
       body.style.setProperty("--ui-scale", scaleRatio.toString());
@@ -28,7 +31,7 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
         rootElement.style.transform = `scale(${scaleRatio})`;
         rootElement.style.transformOrigin = "top left";
         rootElement.style.width = `${100 / scaleRatio}%`;
-        rootElement.style.height = `${100 / scaleRatio}%`;
+        rootElement.style.minHeight = `${100 / scaleRatio}vh`;
         body.classList.add("ui-scaled");
         body.classList.remove("is-mobile");
       }

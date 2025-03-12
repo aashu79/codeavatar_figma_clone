@@ -51,77 +51,75 @@ const Footer = () => {
   ];
 
   return (
-    <ResponsiveScaler>
-      <footer className=" border-t border-b bg-white  bottom-0">
-        <div className=" my-[32px] mx-[48px] ">
-          {/* Main Footer Content */}
-          <section className="flex gap-[376px]  border-gray-200">
-            {/* Logo and Description Column */}
-            <div className="w-[376px]">
-              <div className="flex items-center mb-4">
-                <Logo />
-              </div>
-
-              <p className="text-sm text-gray-600 mb-6">
-                When I worked as a web designer, I was fascinated by how design
-                trends changed each year. Since hang
-              </p>
-
-              {/* Social Icons */}
-              <div className="flex space-x-4">
-                {socialLinks.map((link, index) => (
-                  <a
-                    key={index}
-                    href={link.url}
-                    className="text-gray-500 hover:text-gray-700"
-                    aria-label={link.ariaLabel}
-                  >
-                    {link.icon}
-                  </a>
-                ))}
-              </div>
+    <footer className=" border-t border-b bg-white  bottom-0 ">
+      <div className=" my-[32px] mx-[48px] ">
+        {/* Main Footer Content */}
+        <section className="flex gap-[376px]  border-gray-200">
+          {/* Logo and Description Column */}
+          <div className="w-[376px]">
+            <div className="flex items-center mb-4">
+              <Logo />
             </div>
 
-            {/* Columns Section */}
+            <p className="text-sm text-gray-600 mb-6">
+              When I worked as a web designer, I was fascinated by how design
+              trends changed each year. Since hang
+            </p>
 
-            <section className="grid grid-cols-3  w-full">
-              {columns.map((column, columnIndex) => (
-                <div className="w-full  max-w-[284px]" key={columnIndex}>
-                  <h3 className="font-medium text-gray-800 mb-4">
-                    {column.title}
-                  </h3>
-                  <ul className="space-y-2">
-                    {column.names.map((name, nameIndex) => (
-                      <li key={nameIndex} className="text-gray-600 text-sm">
-                        {name}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </section>
-          </section>
-
-          {/* Copyright and Legal Links */}
-          <section className="flex justify-between items-center pt-6 border-t-[2px] mt-[40px]">
-            <div className="text-gray-600 text-sm">
-              © Productname 2025. All rights reserved
-            </div>
-            <div className="flex space-x-6">
-              {legalLinks.map((link, index) => (
+            {/* Social Icons */}
+            <div className="flex space-x-4">
+              {socialLinks.map((link, index) => (
                 <a
                   key={index}
                   href={link.url}
-                  className="text-gray-600 text-sm hover:text-gray-800"
+                  className="text-gray-500 hover:text-gray-700"
+                  aria-label={link.ariaLabel}
                 >
-                  {link.text}
+                  {link.icon}
                 </a>
               ))}
             </div>
+          </div>
+
+          {/* Columns Section */}
+
+          <section className="grid grid-cols-3  w-full">
+            {columns.map((column, columnIndex) => (
+              <div className="w-full  max-w-[284px]" key={columnIndex}>
+                <h3 className="font-medium text-gray-800 mb-4">
+                  {column.title}
+                </h3>
+                <ul className="space-y-2">
+                  {column.names.map((name, nameIndex) => (
+                    <li key={nameIndex} className="text-gray-600 text-sm">
+                      {name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </section>
-        </div>
-      </footer>
-    </ResponsiveScaler>
+        </section>
+
+        {/* Copyright and Legal Links */}
+        <section className="flex justify-between items-center pt-6 border-t-[2px] mt-[40px]">
+          <div className="text-gray-600 text-sm">
+            © Productname 2025. All rights reserved
+          </div>
+          <div className="flex space-x-6">
+            {legalLinks.map((link, index) => (
+              <a
+                key={index}
+                href={link.url}
+                className="text-gray-600 text-sm hover:text-gray-800"
+              >
+                {link.text}
+              </a>
+            ))}
+          </div>
+        </section>
+      </div>
+    </footer>
   );
 };
 

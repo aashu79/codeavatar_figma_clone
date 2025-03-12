@@ -79,6 +79,9 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  /* Default values if JavaScript doesn't run */
+  --ui-scale: 1;
+  --ui-scale-inverse: 1;
 }
 
 .dark {
@@ -122,114 +125,97 @@
   }
   body {
     @apply bg-background text-foreground;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
   }
 }
 
 body {
   background: #f8f8f8;
+  min-height: 100vh;
 }
 
-#__next {
-  transform: scale(var(--ui-scale));
+/* App content container scaling */
+main.app-content {
   transform-origin: top left;
-  width: calc(100% / var(--ui-scale));
-  height: calc(100% / var(--ui-scale));
+  min-height: 100vh;
+  position: relative;
+  width: 100%;
 }
 
-/* Base root variables */
-/* :root {
-  --scale-factor: 1;
-  --width-adjustment: 100%;
-  --height-adjustment: 100vh;
-  font-size: 16px;
-} */
+/* Mobile overflow prevention */
+body.is-mobile {
+  overflow-x: hidden;
+}
 
-/* More granular breakpoints with calculated scale factors */
-/* @media (max-width: 1400px) {
-  :root {
-    --scale-factor: 0.98;
-    --width-adjustment: calc(100% / var(--scale-factor));
-  }
+/* Content spacing accounting for fixed navbar and footer */
+.content-container {
+  padding: calc(20px * var(--ui-scale-inverse));
+  margin-top: calc(60px * var(--ui-scale-inverse)); /* Space for navbar */
+  margin-bottom: calc(60px * var(--ui-scale-inverse)); /* Space for footer */
+  /* min-height: calc(100vh - 120px * var(--ui-scale-inverse)); */
 }
-@media (max-width: 1200px) {
-  :root {
-    --scale-factor: 0.96;
-    --width-adjustment: calc(100% / var(--scale-factor));
-  }
-}
-@media (max-width: 992px) {
-  :root {
-    --scale-factor: 0.94;
-    --width-adjustment: calc(100% / var(--scale-factor));
-  }
-}
-@media (max-width: 768px) {
-  :root {
-    --scale-factor: 0.9;
-    --width-adjustment: calc(100% / var(--scale-factor));
-  }
-}
-@media (max-width: 576px) {
-  :root {
-    --scale-factor: 0.86;
-    --width-adjustment: calc(100% / var(--scale-factor));
-  }
-}
-@media (max-width: 480px) {
-  :root {
-    --scale-factor: 0.82;
-    --width-adjustment: calc(100% / var(--scale-factor));
-  }
-}
-@media (max-width: 400px) {
-  :root {
-    --scale-factor: 0.78;
-    --width-adjustment: calc(100% / var(--scale-factor));
-  }
-} */
 
-/* Optimize performance with will-change and hardware acceleration */
-/* body {
-  transform: scale(var(--scale-factor));
-  transform-origin: top center;
-  width: var(--width-adjustment);
-  min-height: var(--height-adjustment);
-  margin: 0 auto;
+/* Image scaling fix */
+img {
+  max-width: 100%;
+  height: auto;
+}
 
- 
+/* Performance optimizations for scaled elements */
+.scaled-element {
   will-change: transform;
   backface-visibility: hidden;
   -webkit-font-smoothing: subpixel-antialiased;
-} */
+}
 
-/* Apply scale to high-level containers instead of body for better performance */
-/* .scale-container {
-  transform: scale(var(--scale-factor));
-  transform-origin: top center;
-  width: var(--width-adjustment);
-  margin: 0 auto;
-} */
-
-/* Compensate for fixed position elements */
-/* .fixed-position {
-  transform: scale(calc(1 / var(--scale-factor)));
-  transform-origin: top left;
-} */
-
-/* Fix for Firefox inconsistencies */
-/* @-moz-document url-prefix() {
-  body {
-    width: calc(var(--width-adjustment) + 1px);
+/* Responsive layout for mobile */
+@media (max-width: 650px) {
+  .scaled-header,
+  .scaled-footer {
+    transform: none;
+    width: 100%;
   }
-} */
 
-/* Calculate height properly to prevent scrolling issues */
-/* html,
-body {
-  overflow-x: hidden;
-} */
+  .content-container {
+    padding: 20px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+  }
+}
 
-/* Use viewport units with scale factor for precise sizing */
-/* .vh-container {
-  height: calc(100vh * var(--scale-factor));
-} */
+.flex-grow {
+  flex-grow: 1;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.standard-footer {
+  margin-top: auto;
+}
+
+/* Content container adjustments */
+.content-container {
+  padding: calc(20px * var(--ui-scale-inverse));
+  width: 100%;
+}
+
+/* Responsive layout for mobile */
+@media (max-width: 650px) {
+  .app-content,
+  .standard-footer {
+    transform: none;
+    width: 100%;
+  }
+
+  .content-container {
+    padding: 20px;
+  }
+}
