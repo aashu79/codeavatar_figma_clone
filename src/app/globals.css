@@ -125,50 +125,104 @@
   }
 }
 
-/* Define the scale factor variable in the root */
-:root {
+body {
+  background: #f8f8f8;
+}
+
+/* Base root variables */
+/* :root {
   --scale-factor: 1;
   --width-adjustment: 100%;
   --height-adjustment: 100vh;
   font-size: 16px;
-}
+} */
 
-/* Adjust the scale factor based on device width with more subtle, gradual changes */
-@media (max-width: 1200px) {
+/* More granular breakpoints with calculated scale factors */
+/* @media (max-width: 1400px) {
   :root {
     --scale-factor: 0.98;
-    --width-adjustment: 102%; /* Counteract the width shrinkage */
-    font-size: 15px;
+    --width-adjustment: calc(100% / var(--scale-factor));
   }
 }
-
+@media (max-width: 1200px) {
+  :root {
+    --scale-factor: 0.96;
+    --width-adjustment: calc(100% / var(--scale-factor));
+  }
+}
 @media (max-width: 992px) {
   :root {
-    --scale-factor: 0.95;
-    --width-adjustment: 105%;
+    --scale-factor: 0.94;
+    --width-adjustment: calc(100% / var(--scale-factor));
   }
 }
-
 @media (max-width: 768px) {
   :root {
-    --scale-factor: 0.92;
-    --width-adjustment: 108%;
+    --scale-factor: 0.9;
+    --width-adjustment: calc(100% / var(--scale-factor));
   }
 }
-
 @media (max-width: 576px) {
   :root {
-    --scale-factor: 0.88;
-    --width-adjustment: 113%;
+    --scale-factor: 0.86;
+    --width-adjustment: calc(100% / var(--scale-factor));
   }
 }
-
-/* Apply the scale factor with improved layout adjustments */
-body {
-  scale: (var(--scale-factor));
-  transform-origin: top center; /* Center origin looks more natural */
-  width: var(--width-adjustment); /* Counteract width shrinkage */
-  min-height: var(--height-adjustment);
-  margin: 0 auto; /* Center the content */
-  background: #f8f8f8;
+@media (max-width: 480px) {
+  :root {
+    --scale-factor: 0.82;
+    --width-adjustment: calc(100% / var(--scale-factor));
+  }
 }
+@media (max-width: 400px) {
+  :root {
+    --scale-factor: 0.78;
+    --width-adjustment: calc(100% / var(--scale-factor));
+  }
+} */
+
+/* Optimize performance with will-change and hardware acceleration */
+/* body {
+  transform: scale(var(--scale-factor));
+  transform-origin: top center;
+  width: var(--width-adjustment);
+  min-height: var(--height-adjustment);
+  margin: 0 auto;
+
+ 
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+} */
+
+/* Apply scale to high-level containers instead of body for better performance */
+/* .scale-container {
+  transform: scale(var(--scale-factor));
+  transform-origin: top center;
+  width: var(--width-adjustment);
+  margin: 0 auto;
+} */
+
+/* Compensate for fixed position elements */
+/* .fixed-position {
+  transform: scale(calc(1 / var(--scale-factor)));
+  transform-origin: top left;
+} */
+
+/* Fix for Firefox inconsistencies */
+/* @-moz-document url-prefix() {
+  body {
+    width: calc(var(--width-adjustment) + 1px);
+  }
+} */
+
+/* Calculate height properly to prevent scrolling issues */
+/* html,
+body {
+  overflow-x: hidden;
+} */
+
+/* Use viewport units with scale factor for precise sizing */
+/* .vh-container {
+  height: calc(100vh * var(--scale-factor));
+} */

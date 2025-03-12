@@ -2,6 +2,7 @@ import Image from "next/image";
 import HeroImageSection from "./sections/HeroImageSection";
 import GoodLabelSection from "./sections/GoodLabelSection";
 import Banner from "./sections/Banner";
+import ResponsiveScaler from "./appComponents/ResponsiveScaler";
 
 export default function Home() {
   const firstSectionData = [
@@ -137,16 +138,18 @@ export default function Home() {
   ];
   return (
     <div className="mt-12 ">
-      <HeroImageSection />
+      <ResponsiveScaler>
+        <HeroImageSection />
 
-      <GoodLabelSection isButtonVisible={false} data={firstSectionData} />
-      <hr className="my-[64px] mx-[49px] border-t-[2px] border-dashed border-gray-400" />
-      <GoodLabelSection isButtonVisible={true} data={secondSectionData} />
-      <hr className="my-[64px] mx-[49px] border-t-[2px] border-dashed border-gray-400" />
-      <GoodLabelSection isButtonVisible={true} data={thirdSectionData} />
-      <hr className="my-[64px] mx-[49px] border-t-[2px] border-dashed border-gray-400" />
-      <GoodLabelSection isButtonVisible={true} data={fourthSectionData} />
-      <Banner />
+        <GoodLabelSection isButtonVisible={false} data={firstSectionData} />
+        <hr className="my-[64px] mx-[49px] border-t-[2px] border-dashed border-gray-400" />
+        <GoodLabelSection isButtonVisible={true} data={secondSectionData} />
+        <hr className="my-[64px] mx-[49px] border-t-[2px] border-dashed border-gray-400" />
+        <GoodLabelSection isButtonVisible={true} data={thirdSectionData} />
+        <hr className="my-[64px] mx-[49px] border-t-[2px] border-dashed border-gray-400" />
+        <GoodLabelSection isButtonVisible={true} data={fourthSectionData} />
+        <Banner />
+      </ResponsiveScaler>
     </div>
   );
 }
