@@ -129,6 +129,13 @@ body {
   background: #f8f8f8;
 }
 
+#__next {
+  transform: scale(var(--ui-scale));
+  transform-origin: top left;
+  width: calc(100% / var(--ui-scale));
+  height: calc(100% / var(--ui-scale));
+}
+
 /* Base root variables */
 /* :root {
   --scale-factor: 1;
