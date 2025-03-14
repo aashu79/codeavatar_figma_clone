@@ -134,6 +134,28 @@
 body {
   background: #f8f8f8;
   min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body,
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+main.app-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transform-origin: top left;
+  position: relative;
+  width: 100%;
+}
+
+main.app-content > * {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* App content container scaling */
@@ -151,10 +173,25 @@ body.is-mobile {
 
 /* Content spacing accounting for fixed navbar and footer */
 .content-container {
-  padding: calc(20px * var(--ui-scale-inverse));
-  margin-top: calc(60px * var(--ui-scale-inverse)); /* Space for navbar */
-  margin-bottom: calc(60px * var(--ui-scale-inverse)); /* Space for footer */
-  /* min-height: calc(100vh - 120px * var(--ui-scale-inverse)); */
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+nav,
+footer {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+nav.flex {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+footer {
+  margin-top: auto;
+  width: 100%;
 }
 
 /* Image scaling fix */
@@ -180,8 +217,11 @@ img {
 
   .content-container {
     padding: 20px;
-    margin-top: 60px;
-    margin-bottom: 60px;
+  }
+
+  nav {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
   }
 }
 
@@ -201,12 +241,6 @@ img {
   margin-top: auto;
 }
 
-/* Content container adjustments */
-.content-container {
-  padding: calc(20px * var(--ui-scale-inverse));
-  width: 100%;
-}
-
 /* Responsive layout for mobile */
 @media (max-width: 650px) {
   .app-content,
@@ -215,7 +249,26 @@ img {
     width: 100%;
   }
 
-  .content-container {
-    padding: 20px;
+  .app-content {
+    min-height: 100vh;
+    height: auto;
   }
+}
+
+/* For responsive behavior on very small screens */
+@media (max-width: 480px) {
+  nav.flex {
+    padding-left: calc(24px * var(--ui-scale-inverse));
+    padding-right: calc(24px * var(--ui-scale-inverse));
+  }
+
+  .standard-padding-x {
+    padding-left: calc(24px * var(--ui-scale-inverse));
+    padding-right: calc(24px * var(--ui-scale-inverse));
+  }
+}
+
+/* Only apply UI scaling to fixed position elements */
+.fixed-element {
+  transform: scale(var(--ui-scale));
 }

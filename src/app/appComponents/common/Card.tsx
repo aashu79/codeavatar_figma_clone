@@ -20,16 +20,20 @@ const Card = ({ title, description, isHighlighted }: CardProps) => {
           }`}
         />
       </CardHeader>
-      <CardFooter className="flex flex-col items-start p-2">
-        <div className="flex items-center justify-start mb-1 ">
-          <h3 className="text-lg font-medium text-gray-900">{title}</h3>
-          {isHighlighted && (
-            <span className="ml-2 px-2 py-1 text-xs font-medium text-white bg-orange-500 rounded">
-              Badge
-            </span>
-          )}
+      <CardFooter className="flex gap-[16px]">
+        <div className="w-12 h-12 relative bg-neutral-200 rounded-lg" />
+
+        <div className=" items-start p-2">
+          <div className="flex items-center justify-start mb-1 ">
+            <h3 className="text-lg font-medium text-gray-900">{title}</h3>
+            {isHighlighted && (
+              <span className="ml-2 px-2 py-1 text-xs font-medium text-white bg-orange-500 rounded">
+                Badge
+              </span>
+            )}
+          </div>
+          <p className="text-sm text-gray-600">{description}</p>
         </div>
-        <p className="text-sm text-gray-600">{description}</p>
       </CardFooter>
     </CardComponent>
   );

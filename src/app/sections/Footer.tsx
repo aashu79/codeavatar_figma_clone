@@ -51,10 +51,10 @@ const Footer = () => {
   ];
 
   return (
-    <footer className=" border-t border-b bg-white  bottom-0 ">
-      <div className=" my-[32px] mx-[48px] ">
+    <footer className="border-t border-b standard-footer bg-white w-full ">
+      <div className="py-[32px] px-[48px]">
         {/* Main Footer Content */}
-        <section className="flex gap-[376px]  border-gray-200">
+        <section className="flex gap-[376px] border-gray-200">
           {/* Logo and Description Column */}
           <div className="w-[376px]">
             <div className="flex items-center mb-4">
@@ -102,11 +102,11 @@ const Footer = () => {
         </section>
 
         {/* Copyright and Legal Links */}
-        <section className="flex justify-between items-center pt-6 border-t-[2px] mt-[40px]">
+        <section className="flex justify-between items-center pt-[calc(6px*var(--ui-scale-inverse))] border-t-[2px] mt-[calc(40px*var(--ui-scale-inverse))]">
           <div className="text-gray-600 text-sm">
             © Productname 2025. All rights reserved
           </div>
-          <div className="flex space-x-6">
+          <div className="flex space-x-[calc(6px*var(--ui-scale-inverse))]">
             {legalLinks.map((link, index) => (
               <a
                 key={index}

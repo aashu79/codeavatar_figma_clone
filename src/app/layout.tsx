@@ -31,7 +31,7 @@ export default function RootLayout({
         <ResponsiveScaler>
           <main className="app-content">
             <Navbar />
-            <div className="content-container">{children}</div>
+            <div className="content-container ">{children}</div>
             <Footer />
           </main>
         </ResponsiveScaler>

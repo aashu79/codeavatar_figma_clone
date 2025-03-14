@@ -5,19 +5,34 @@ import SearchBar from "../appComponents/navbar/SearchBar";
 
 const Navbar = () => {
   return (
-    <nav className="flex justify-between items-center  mx-[40px] my-[16px] ">
-      {/* right part */}
-      <section className="flex items-center gap-[4rem]">
-        <Logo />
-        <SearchBar />
-        <MenuItems />
-      </section>
+    <div className="flex flex-col">
+      <nav className="flex justify-between items-center px-12 py-4 w-full border-b">
+        {/* left part - adjusted for better spacing */}
+        <section className="flex items-center flex-grow gap-4 md:gap-8">
+          <Logo />
 
-      {/* left part */}
-      <section>
-        <Button>Button</Button>
-      </section>
-    </nav>
+          {/* SearchBar now grows to fill available space */}
+          <div className="flex-grow max-w-md">
+            <SearchBar />
+          </div>
+
+          {/* Only show on large screens */}
+          <div className="hidden lg:flex">
+            <MenuItems />
+          </div>
+        </section>
+
+        {/* right part */}
+        <section>
+          <Button>Button</Button>
+        </section>
+      </nav>
+
+      {/* Mobile menu - shown only on smaller screens */}
+      <div className="mx-auto flex lg:hidden">
+        <MenuItems />
+      </div>
+    </div>
   );
 };
 
