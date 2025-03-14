@@ -32,7 +32,7 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
+  --color-secondary: var (--secondary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
   --color-popover-foreground: var(--popover-foreground);
@@ -225,22 +225,9 @@ img {
     min-height: 100vh;
     height: auto;
   }
-  /* 
-  nav {
-    padding-left: 24px !important;
-    padding-right: 24px !important;
-  } */
 }
 
-/* Small screen adjustments */
-@media (max-width: 480px) {
-  nav.flex {
-    padding-left: calc(24px * var(--ui-scale-inverse));
-    padding-right: calc(24px * var(--ui-scale-inverse));
-  }
-
-  .standard-padding-x {
-    padding-left: calc(24px * var(--ui-scale-inverse));
-    padding-right: calc(24px * var(--ui-scale-inverse));
-  }
+/* Add at the bottom of your globals.css */
+body {
+  visibility: hidden;
 }

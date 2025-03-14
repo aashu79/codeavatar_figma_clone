@@ -1,10 +1,14 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface ResponsiveScalerProps extends React.PropsWithChildren {}
 
 const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
+  // Track if the component has mounted
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
+    // Simple scaling function
     const handleScaling = () => {
       const rootElement =
         document.querySelector<HTMLElement>("main.app-content");
@@ -12,40 +16,38 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
 
       if (!rootElement || !body) return;
 
-      // Simple breakpoints - just use standard responsive breakpoints
-      const isMobile = window.innerWidth <= 650;
+      const windowWidth = window.innerWidth;
+      let scaleRatio = 1;
 
-      // Simple scaling factor - don't overcomplicate
-      const scaleRatio = isMobile ? 1 : Math.min(window.innerWidth / 1440, 1);
+      scaleRatio = Math.min(windowWidth / 1440, 1);
+      body.classList.add("is-scaled");
+      body.classList.remove("is-mobile");
 
-      // Set CSS custom properties for use in fixed elements only
+      // Set CSS variables
       body.style.setProperty("--ui-scale", scaleRatio.toString());
+      body.style.setProperty("--ui-scale-inverse", (1 / scaleRatio).toString());
 
-      // Apply scaling transformations only in desktop mode
-      if (isMobile) {
-        rootElement.style.transform = "none";
-        rootElement.style.width = "100%";
-        body.classList.add("is-mobile");
-        body.classList.remove("is-scaled");
-      } else {
-        rootElement.style.transform = `scale(${scaleRatio})`;
-        rootElement.style.transformOrigin = "top left";
-        rootElement.style.width = `${100 / scaleRatio}%`;
-        body.classList.add("is-scaled");
-        body.classList.remove("is-mobile");
-      }
+      // Apply scaling transformations
+      rootElement.style.transform = `scale(${scaleRatio})`;
+      rootElement.style.transformOrigin = "top left";
+      rootElement.style.width = `${100 / scaleRatio}%`;
+      rootElement.style.minHeight = `${100 / scaleRatio}vh`;
     };
 
-    // Initial setup
+    // Apply scaling
     handleScaling();
 
-    // Event listeners
+    // Show the content after scaling has been applied
+    document.body.style.visibility = "visible";
+
+    // Mark as mounted
+    setMounted(true);
+
+    // Listen for resize events
     window.addEventListener("resize", handleScaling);
 
-    // Cleanup
     return () => {
       window.removeEventListener("resize", handleScaling);
-      document.body.classList.remove("is-mobile", "is-scaled");
     };
   }, []);
 

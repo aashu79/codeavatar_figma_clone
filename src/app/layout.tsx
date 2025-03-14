@@ -27,11 +27,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <head>{/* No inline script needed anymore */}</head>
       <body>
         <ResponsiveScaler>
           <main className="app-content">
             <Navbar />
-            <div className="content-container ">{children}</div>
+            <div className="content-container">{children}</div>
             <Footer />
           </main>
         </ResponsiveScaler>
