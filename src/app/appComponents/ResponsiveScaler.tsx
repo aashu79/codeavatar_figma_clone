@@ -19,9 +19,18 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
       const windowWidth = window.innerWidth;
       let scaleRatio = 1;
 
-      scaleRatio = Math.min(windowWidth / 1440, 1);
-      body.classList.add("is-scaled");
-      body.classList.remove("is-mobile");
+      // Apply scaling based on device category using Tailwind breakpoints
+      if (windowWidth >= 1536) {
+        // 2xl breakpoint and above: Large desktop scaling (based on 1920px)
+        scaleRatio = Math.min(windowWidth / 1920, 1);
+        body.classList.add("is-desktop");
+        body.classList.remove("is-medium", "is-mobile");
+      } else {
+        // COMBINED: Both tablet and laptop (640px-1535px) use same scaling
+        scaleRatio = Math.min(windowWidth / 1440, 1);
+        body.classList.add("is-medium");
+        body.classList.remove("is-desktop", "is-mobile");
+      }
 
       // Set CSS variables
       body.style.setProperty("--ui-scale", scaleRatio.toString());

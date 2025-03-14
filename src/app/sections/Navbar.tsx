@@ -16,7 +16,7 @@ const Navbar = () => {
         </section>
 
         {/* right part */}
-        <section className="border-2">
+        <section>
           <Button>Button</Button>
         </section>
       </div>

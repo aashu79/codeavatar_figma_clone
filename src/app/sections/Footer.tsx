@@ -54,7 +54,7 @@ const Footer = () => {
     <footer className="border-t border-b standard-footer bg-white w-full ">
       <div className="py-[32px] px-[48px]">
         {/* Main Footer Content */}
-        <section className="flex gap-[376px] border-gray-200">
+        <section className="flex  gap-20 md:flex-row md:gap-[376px] border-gray-200">
           {/* Logo and Description Column */}
           <div className="w-[376px]">
             <div className="flex items-center mb-4">

@@ -25,6 +25,11 @@ const MenuItems = () => {
         { id: "sub-5", title: "Submenu Item 5" },
         { id: "sub-6", title: "Submenu Item 6" },
         { id: "sub-7", title: "Submenu Item 7" },
+        { id: "sub-8", title: "Submenu Item 8" },
+        { id: "sub-9", title: "Submenu Item 9" },
+        { id: "sub-10", title: "Submenu Item 10" },
+        { id: "sub-11", title: "Submenu Item 11" },
+        { id: "sub-12", title: "Submenu Item 12" },
       ],
     },
     {
@@ -75,11 +80,11 @@ const MenuItems = () => {
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-48">
-                <ScrollArea className="h-auto max-h-60">
+                <ScrollArea className="h-auto max-h-40">
                   {item.submenuItems?.map((subItem) => (
                     <DropdownMenuItem
                       key={subItem.id}
-                      className="cursor-pointer"
+                      className=" cursor-pointer p-2.5 hover:!bg-gray-200"
                     >
                       {subItem.title}
                     </DropdownMenuItem>
