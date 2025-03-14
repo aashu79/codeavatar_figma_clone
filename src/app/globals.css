@@ -128,15 +128,12 @@
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    background: #f8f8f8;
+    min-height: 100vh;
   }
 }
 
-body {
-  background: #f8f8f8;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
+/* Reset and base styles */
 body,
 html {
   height: 100%;
@@ -144,6 +141,7 @@ html {
   padding: 0;
 }
 
+/* Layout containers */
 main.app-content {
   display: flex;
   flex-direction: column;
@@ -158,20 +156,7 @@ main.app-content > * {
   box-sizing: border-box;
 }
 
-/* App content container scaling */
-main.app-content {
-  transform-origin: top left;
-  min-height: 100vh;
-  position: relative;
-  width: 100%;
-}
-
-/* Mobile overflow prevention */
-body.is-mobile {
-  overflow-x: hidden;
-}
-
-/* Content spacing accounting for fixed navbar and footer */
+/* Common layout elements */
 .content-container {
   flex: 1;
   width: 100%;
@@ -185,64 +170,51 @@ footer {
 }
 
 nav.flex {
-  box-sizing: border-box;
   max-width: 100%;
 }
 
 footer {
   margin-top: auto;
-  width: 100%;
 }
 
-/* Image scaling fix */
+/* Media elements */
 img {
   max-width: 100%;
   height: auto;
 }
 
-/* Performance optimizations for scaled elements */
+/* Performance optimizations */
 .scaled-element {
   will-change: transform;
   backface-visibility: hidden;
   -webkit-font-smoothing: subpixel-antialiased;
 }
 
-/* Responsive layout for mobile */
-@media (max-width: 650px) {
-  .scaled-header,
-  .scaled-footer {
-    transform: none;
-    width: 100%;
-  }
-
-  /* .content-container {
-    padding: 20px;
-  } */
-
-  nav {
-    padding-left: 24px !important;
-    padding-right: 24px !important;
-  }
-}
-
+/* Utility classes */
 .flex-grow {
   flex-grow: 1;
 }
-
 .flex-col {
   flex-direction: column;
 }
-
 .min-h-screen {
   min-height: 100vh;
 }
-
 .standard-footer {
   margin-top: auto;
 }
+.fixed-element {
+  transform: scale(var(--ui-scale));
+}
 
-/* Responsive layout for mobile */
+/* Responsive layout */
 @media (max-width: 650px) {
+  body.is-mobile {
+    overflow-x: hidden;
+  }
+
+  .scaled-header,
+  .scaled-footer,
   .app-content,
   .standard-footer {
     transform: none;
@@ -253,9 +225,14 @@ img {
     min-height: 100vh;
     height: auto;
   }
+  /* 
+  nav {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  } */
 }
 
-/* For responsive behavior on very small screens */
+/* Small screen adjustments */
 @media (max-width: 480px) {
   nav.flex {
     padding-left: calc(24px * var(--ui-scale-inverse));
@@ -266,9 +243,4 @@ img {
     padding-left: calc(24px * var(--ui-scale-inverse));
     padding-right: calc(24px * var(--ui-scale-inverse));
   }
-}
-
-/* Only apply UI scaling to fixed position elements */
-.fixed-element {
-  transform: scale(var(--ui-scale));
 }
