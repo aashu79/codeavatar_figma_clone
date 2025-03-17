@@ -7,7 +7,7 @@ const Navbar = () => {
   return (
     <nav className="flex flex-col">
       {/* Desktop nabar */}
-      <div className="hidden md:flex justify-between items-center px-12 py-4 w-full border-b">
+      <div className="hidden lg:flex justify-between items-center px-12 py-4 w-full border-b">
         {/* left part */}
         <section className="flex items-center gap-8">
           <Logo />
@@ -22,7 +22,7 @@ const Navbar = () => {
       </div>
 
       {/* Tablet Navbar */}
-      <div className="flex md:hidden justify-between gap-8 items-center px-12 py-4 w-full border-b">
+      <div className="flex lg:hidden justify-between gap-8 items-center px-12 py-4 w-full border-b">
         <Logo />
         <div className="flex-1">
           <SearchBar />
@@ -30,7 +30,7 @@ const Navbar = () => {
         <Button>Button</Button>
       </div>
 
-      <div className="mx-auto flex md:hidden">
+      <div className="mx-auto flex lg:hidden">
         <MenuItems />
       </div>
     </nav>

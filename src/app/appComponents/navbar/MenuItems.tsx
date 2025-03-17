@@ -79,8 +79,11 @@ const MenuItems = () => {
                   </span>
                 </div>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-48">
-                <ScrollArea className="h-auto max-h-40">
+              <DropdownMenuContent
+                align="start"
+                className="w-48 scale-positioned"
+              >
+                <ScrollArea className="h-auto max-h-40 ">
                   {item.submenuItems?.map((subItem) => (
                     <DropdownMenuItem
                       key={subItem.id}
