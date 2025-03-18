@@ -21,7 +21,7 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
 
       let scaleRatio = 1;
       if (isMobile) {
-        scaleRatio = 1;
+        scaleRatio = window.innerWidth / 430;
       } else if (isTablet) {
         scaleRatio = window.innerWidth / 1024;
       } else if (isDesktop) {

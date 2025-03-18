@@ -142,11 +142,11 @@ export default function Home() {
         <HeroImageSection />
 
         <GoodLabelSection isButtonVisible={false} data={firstSectionData} />
-        <hr className="my-[64px] mx-[49px] border-t-[2px] border-dashed border-gray-400" />
+        <hr className="my-[64px] mx-[20px] md:mx-[49px] border-t-[2px] border-dashed border-gray-400" />
         <GoodLabelSection isButtonVisible={true} data={secondSectionData} />
-        <hr className="my-[64px] mx-[49px] border-t-[2px] border-dashed border-gray-400" />
+        <hr className="my-[64px] mx-[20px] md:mx-[49px] border-t-[2px] border-dashed border-gray-400" />
         <GoodLabelSection isButtonVisible={true} data={thirdSectionData} />
-        <hr className="my-[64px] mx-[49px] border-t-[2px] border-dashed border-gray-400" />
+        <hr className="my-[64px] mx-[20px] md:mx-[49px] border-t-[2px] border-dashed border-gray-400" />
         <GoodLabelSection isButtonVisible={true} data={fourthSectionData} />
         <Banner />
       </ResponsiveScaler>

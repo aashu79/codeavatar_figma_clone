@@ -10,9 +10,9 @@ interface sectionProps {
 
 const GoodLabelSection = ({ isButtonVisible, data }: sectionProps) => {
   return (
-    <section className="my-[32px] mx-[40px]  ">
-      <header className="flex justify-center items-center">
-        <div className="flex gap-2 items-center mx-auto">
+    <section className="my-[32px] mx-[20px] md:mx-[40px]">
+      <header className="inline-block md:flex justify-start md:justify-center items-center">
+        <div className="flex gap-2 sm:justify-start items-center mx-auto">
           <h1>A Good Label</h1>
           <Button className="bg-white text-black border-gray-300 border-[1px] hover:text-white hover:cursor-pointer">
             Value
@@ -22,7 +22,7 @@ const GoodLabelSection = ({ isButtonVisible, data }: sectionProps) => {
 
       {/* card section  */}
 
-      <div className="grid grid-cols-3 lg:grid-cols-4 flex-wrap gap-[24px] my-[32px]  justify-center">
+      <div className="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 flex-wrap gap-[8px] md:gap-[24px] my-[12px] md:my-[32px] justify-start md:justify-center">
         {data?.map((card, index) => (
           <Card
             key={index}
@@ -34,7 +34,7 @@ const GoodLabelSection = ({ isButtonVisible, data }: sectionProps) => {
       </div>
       <footer className="flex justify-center items-center">
         {isButtonVisible && (
-          <Button className="bg-white h-[56px] w-[129px]  py-[16px] px-[39px] text-black rounded-[40px] hover:bg-gray-200 transition-colors hover:cursor-pointer">
+          <Button className="bg-white hidden md:block h-[56px] w-[129px]  py-[16px] px-[39px] text-black rounded-[40px] hover:bg-gray-200 transition-colors hover:cursor-pointer">
             Button
           </Button>
         )}

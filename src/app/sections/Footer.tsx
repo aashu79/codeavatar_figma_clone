@@ -2,7 +2,6 @@ import React from "react";
 import { FaLinkedin, FaInstagram } from "react-icons/fa";
 import Logo from "../appComponents/common/Logo";
 import { FaXTwitter } from "react-icons/fa6";
-import ResponsiveScaler from "../appComponents/ResponsiveScaler";
 
 const Footer = () => {
   const socialLinks = [
@@ -51,12 +50,12 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="border-t border-b standard-footer bg-white w-full ">
-      <div className="py-[32px] px-[48px]">
-        {/* Main Footer Content */}
-        <section className="flex  gap-20 md:flex-row md:gap-[376px] border-gray-200">
+    <footer className="border-t border-b bg-white w-full">
+      <div className="py-8 px-5 md:px-12">
+        {/* Main Footer Content - Force flex-row at md breakpoint with !important */}
+        <section className="flex flex-col md:!flex-row gap-8 md:gap-20 lg:gap-24">
           {/* Logo and Description Column */}
-          <div className="w-[376px]">
+          <div className="w-full md:w-auto md:max-w-[350px] lg:max-w-[376px]">
             <div className="flex items-center mb-4">
               <Logo />
             </div>
@@ -81,11 +80,10 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Columns Section */}
-
-          <section className="grid grid-cols-3  w-full">
+          {/* Columns Section - Force grid-cols-3 at md breakpoint */}
+          <section className="grid grid-cols-2  md:!grid-cols-3 gap-5 w-full">
             {columns.map((column, columnIndex) => (
-              <div className="w-full  max-w-[284px]" key={columnIndex}>
+              <div className="w-full max-w-[280px]" key={columnIndex}>
                 <h3 className="font-medium text-gray-800 mb-4">
                   {column.title}
                 </h3>
@@ -101,12 +99,12 @@ const Footer = () => {
           </section>
         </section>
 
-        {/* Copyright and Legal Links */}
-        <section className="flex justify-between items-center pt-[calc(6px*var(--ui-scale-inverse))] border-t-[2px] mt-[calc(40px*var(--ui-scale-inverse))]">
-          <div className="text-gray-600 text-sm">
+        {/* Copyright and Legal Links - Force flex-row at md breakpoint */}
+        <section className="flex flex-col  md:!flex-row justify-between items-center pt-6 border-t mt-10">
+          <div className="text-gray-600 text-sm mb-4 md:mb-0">
             © Productname 2025. All rights reserved
           </div>
-          <div className="flex space-x-[calc(6px*var(--ui-scale-inverse))]">
+          <div className="flex gap-6">
             {legalLinks.map((link, index) => (
               <a
                 key={index}
