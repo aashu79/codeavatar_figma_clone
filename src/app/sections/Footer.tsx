@@ -1,7 +1,9 @@
+"use client";
 import React from "react";
 import { FaLinkedin, FaInstagram } from "react-icons/fa";
 import Logo from "../appComponents/common/Logo";
 import { FaXTwitter } from "react-icons/fa6";
+import { useGetAllProductsQuery } from "../apiServices/productServices";
 
 const Footer = () => {
   const socialLinks = [
@@ -53,9 +55,9 @@ const Footer = () => {
     <footer className="border-t border-b bg-white w-full">
       <div className="py-8 px-5 md:px-12">
         {/* Main Footer Content - Force flex-row at md breakpoint with !important */}
-        <section className="flex flex-col md:!flex-row gap-8 md:gap-20 lg:gap-24">
+        <section className="flex flex-col md:!flex-row gap-8 md:!gap-25 lg:!gap-[394px]">
           {/* Logo and Description Column */}
-          <div className="w-full md:w-auto md:max-w-[350px] lg:max-w-[376px]">
+          <div className="w-full  md:w-auto md:max-w-[350px] lg:max-w-[376px] ">
             <div className="flex items-center mb-4">
               <Logo />
             </div>

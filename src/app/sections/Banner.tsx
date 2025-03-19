@@ -3,7 +3,7 @@ import { Button } from "../../components/ui/button";
 
 const Banner = () => {
   return (
-    <section className="bg-[#202020] my-[20px] sm:my-[24px] md:my-[28px] lg:my-[32px] mx-[16px] sm:mx-[24px] md:mx-[32px] lg:mx-[48px] h-auto sm:h-[204px] md:h-64 relative overflow-hidden rounded-[10px]">
+    <section className="bg-[#202020] my-[20px] sm:my-[24px] md:my-[28px] lg:my-[32px] mx-[16px] sm:mx-[24px] md:mx-[40] lg:mx-[48px] h-auto sm:h-[204px] md:h-64 relative overflow-hidden rounded-[10px]">
       {/* Mobile layout - stacked vertically */}
       <div className="flex flex-col p-6 md:hidden">
         <div className="mb-[40px] ">

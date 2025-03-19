@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./sections/Navbar";
 import Footer from "./sections/Footer";
 import ResponsiveScaler from "./appComponents/ResponsiveScaler";
+import { StoreProvider } from "./redux/storeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,11 +31,13 @@ export default function RootLayout({
       <head>{/* No inline script needed anymore */}</head>
       <body>
         <ResponsiveScaler>
-          <main className="app-content">
-            <Navbar />
-            <div className="content-container">{children}</div>
-            <Footer />
-          </main>
+          <StoreProvider>
+            <main className="app-content">
+              <Navbar />
+              <div className="content-container">{children}</div>
+              <Footer />
+            </main>
+          </StoreProvider>
         </ResponsiveScaler>
       </body>
     </html>

@@ -1,7 +1,9 @@
+"use client";
 import React from "react";
 import Card from "../appComponents/common/Card";
 import { CardProps } from "../../types/globalTypes";
 import { Button } from "../../components/ui/button";
+import { useGetAllProductsQuery } from "../apiServices/productServices";
 
 interface sectionProps {
   isButtonVisible: boolean;
@@ -9,8 +11,15 @@ interface sectionProps {
 }
 
 const GoodLabelSection = ({ isButtonVisible, data }: sectionProps) => {
+  const {
+    data: productData,
+    error,
+    isLoading,
+  } = useGetAllProductsQuery(undefined, {});
+  console.log(productData);
+
   return (
-    <section className="my-[32px] mx-[20px] md:mx-[40px]">
+    <section className="my-[32px] mx-[20px] md:!mx-[40px] lg:mx-[48px]">
       <header className="inline-block md:flex justify-start md:justify-center items-center">
         <div className="flex gap-2 sm:justify-start items-center mx-auto">
           <h1>A Good Label</h1>
@@ -22,7 +31,7 @@ const GoodLabelSection = ({ isButtonVisible, data }: sectionProps) => {
 
       {/* card section  */}
 
-      <div className="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 flex-wrap gap-[8px] md:gap-[24px] my-[12px] md:my-[32px] justify-start md:justify-center">
+      <div className="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 flex-wrap gap-[20px] md:!gap-[24px] my-[12px] md:my-[32px] justify-start md:justify-center">
         {data?.map((card, index) => (
           <Card
             key={index}
