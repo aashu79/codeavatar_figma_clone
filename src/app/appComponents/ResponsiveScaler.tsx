@@ -15,6 +15,9 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
 
       if (!rootElement || !body) return;
 
+      // Store previous state
+      const wasMobile = body.classList.contains("is-mobile");
+
       const isMobile = window.innerWidth <= 768;
       const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
       const isDesktop = window.innerWidth > 1024;
@@ -36,13 +39,25 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
         rootElement.style.width = "100%";
         rootElement.style.height = "auto";
         rootElement.style.minHeight = "100vh";
+        rootElement.style.overflowY = "auto"; // Explicitly set overflow
 
         body.classList.add("is-mobile");
         body.classList.remove("ui-scaled", "is-tablet", "is-desktop");
 
         body.style.height = "auto";
+        body.style.overflow = "auto"; // Explicitly enable scrolling
+        body.style.position = "static"; // Ensure it's not fixed
+
         html.style.height = "auto";
+        html.style.overflow = "auto"; // Enable scrolling
         html.classList.remove("ui-scaled");
+
+        // Force a layout recalculation if switching from desktop to mobile
+        if (!wasMobile) {
+          setTimeout(() => {
+            window.scrollTo(0, 0);
+          }, 10);
+        }
       } else {
         rootElement.style.transform = `scale(${scaleRatio})`;
         rootElement.style.transformOrigin = "top left";
@@ -133,17 +148,32 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
           transform: none !important;
         }
 
-        /* Mobile fallback */
+        /* Mobile fallback with thin scrollbar */
         body.is-mobile {
           overflow-x: hidden;
           height: auto;
           position: static;
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
         }
         body.is-mobile main.app-content {
           width: 100% !important;
           height: auto;
           min-height: 100vh;
           overflow-y: auto;
+          scrollbar-width: thin; /* Thin scrollbar for Firefox */
+        }
+        
+        /* Very thin scrollbar for mobile view in WebKit browsers */
+        body.is-mobile main.app-content::-webkit-scrollbar {
+          width: 2px; /* Very thin scrollbar */
+          background: transparent;
+        }
+        body.is-mobile main.app-content::-webkit-scrollbar-thumb {
+          background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent thumb */
+        }
+        body.is-mobile main.app-content::-webkit-scrollbar-track {
+          background: transparent;
         }
 
         /* Footer fix */
@@ -157,9 +187,23 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
     document.body.style.visibility = "visible";
     setMounted(true);
 
+    // Add both standard resize event and observer for DevTools
     window.addEventListener("resize", handleScaling);
+
+    // Create ResizeObserver to help with DevTools screen size changes
+    let resizeObserver: ResizeObserver;
+    if (typeof ResizeObserver !== "undefined") {
+      resizeObserver = new ResizeObserver(() => {
+        handleScaling();
+      });
+      resizeObserver.observe(document.documentElement);
+    }
+
     return () => {
       window.removeEventListener("resize", handleScaling);
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
     };
   }, []);
 
