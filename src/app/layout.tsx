@@ -4,7 +4,7 @@ import "./globals.css";
 import Navbar from "./sections/Navbar";
 import Footer from "./sections/Footer";
 import ResponsiveScaler from "./appComponents/ResponsiveScaler";
-import { StoreProvider } from "./redux/storeProvider";
+import { StoreProvider } from "./redux/StoreProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +28,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <head>{/* No inline script needed anymore */}</head>
       <body>
         <ResponsiveScaler>
           <StoreProvider>

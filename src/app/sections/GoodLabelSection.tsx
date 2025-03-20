@@ -4,6 +4,8 @@ import Card from "../appComponents/common/Card";
 import { CardProps } from "../../types/globalTypes";
 import { Button } from "../../components/ui/button";
 import { useGetAllProductsQuery } from "../apiServices/productServices";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 interface sectionProps {
   isButtonVisible: boolean;
@@ -17,7 +19,8 @@ const GoodLabelSection = ({ isButtonVisible, data }: sectionProps) => {
     isLoading,
   } = useGetAllProductsQuery(undefined, {});
   console.log(productData);
-
+  const count = useSelector((state: RootState) => state.globalState.value);
+  console.log(count);
   return (
     <section className="my-[32px] mx-[20px] md:!mx-[40px] lg:mx-[48px]">
       <header className="inline-block md:flex justify-start md:justify-center items-center">

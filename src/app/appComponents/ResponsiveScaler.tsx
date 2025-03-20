@@ -26,7 +26,7 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
       if (isMobile) {
         scaleRatio = window.innerWidth / 430;
       } else if (isTablet) {
-        scaleRatio = window.innerWidth / 1024;
+        scaleRatio = window.innerWidth / 1280;
       } else if (isDesktop) {
         scaleRatio = window.innerWidth / 1920;
       }
@@ -190,20 +190,8 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
     // Add both standard resize event and observer for DevTools
     window.addEventListener("resize", handleScaling);
 
-    // Create ResizeObserver to help with DevTools screen size changes
-    let resizeObserver: ResizeObserver;
-    if (typeof ResizeObserver !== "undefined") {
-      resizeObserver = new ResizeObserver(() => {
-        handleScaling();
-      });
-      resizeObserver.observe(document.documentElement);
-    }
-
     return () => {
       window.removeEventListener("resize", handleScaling);
-      if (resizeObserver) {
-        resizeObserver.disconnect();
-      }
     };
   }, []);
 

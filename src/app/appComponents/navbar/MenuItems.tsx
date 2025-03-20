@@ -8,51 +8,10 @@ import {
   DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu";
 import { ScrollArea } from "../../../components/ui/scroll-area";
+import { MenuItem } from "../../../types/globalTypes";
 
-const MenuItems = () => {
+const MenuItems = ({ menuItems }: { menuItems: MenuItem[] }) => {
   const [openSubmenu, setOpenSubmenu] = useState<number | null>(null);
-
-  const menuItems = [
-    {
-      id: 1,
-      title: "Menu Item",
-      hasSubmenu: true,
-      submenuItems: [
-        { id: "sub-1", title: "Submenu Item 1" },
-        { id: "sub-2", title: "Submenu Item 2" },
-        { id: "sub-3", title: "Submenu Item 3" },
-        { id: "sub-4", title: "Submenu Item 4" },
-        { id: "sub-5", title: "Submenu Item 5" },
-        { id: "sub-6", title: "Submenu Item 6" },
-        { id: "sub-7", title: "Submenu Item 7" },
-        { id: "sub-8", title: "Submenu Item 8" },
-        { id: "sub-9", title: "Submenu Item 9" },
-        { id: "sub-10", title: "Submenu Item 10" },
-        { id: "sub-11", title: "Submenu Item 11" },
-        { id: "sub-12", title: "Submenu Item 12" },
-      ],
-    },
-    {
-      id: 2,
-      title: "Menu Item",
-      hasSubmenu: false,
-    },
-    {
-      id: 3,
-      title: "Menu Item",
-      hasSubmenu: true,
-      submenuItems: [
-        { id: "sub-8", title: "Submenu Item 1" },
-        { id: "sub-9", title: "Submenu Item 2" },
-        { id: "sub-10", title: "Submenu Item 3" },
-      ],
-    },
-    {
-      id: 4,
-      title: "Menu Item",
-      hasSubmenu: false,
-    },
-  ];
 
   const handleToggleSubmenu = (id: number) => {
     setOpenSubmenu(openSubmenu === id ? null : id);
