@@ -19,11 +19,11 @@ const ThumbnailCarousel: React.FC<ThumbnailCarouselProps> = ({
   return (
     <div className="flex flex-col h-full">
       {/* Media display area */}
-      <div className="relative flex-1 bg-[#E5E5E5] rounded-xl overflow-hidden flex items-center justify-center">
+      <div className="relative max-h-[219px] md:max-h-[631px] flex-1 bg-[#E5E5E5] rounded-xl overflow-hidden flex items-center justify-center">
         <img
           src={mediaItems[activeIndex].thumbnail}
           alt="Main display"
-          className="w-full h-full object-cover"
+          className="w-full  object-cover"
         />
         <button className="absolute w-14 h-14 rounded-full bg-zinc-400 flex items-center justify-center">
           <div className="w-8 h-8 relative">

@@ -38,9 +38,9 @@ export default function RootLayout({
               <div className="content-container">{children}</div>
 
               <Footer />
+              <div className="!bg-white">{modal}</div>
             </main>
           </StoreProvider>
-          {/* {modal} */}
         </ResponsiveScaler>
       </body>
     </html>

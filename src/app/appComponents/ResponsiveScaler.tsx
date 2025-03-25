@@ -186,18 +186,19 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
          * Handles the unique positioning requirements of modals
          */
         .scale-modal-content {
-          /* Fix the transform by separating scale and translate with proper ordering */
+          /* Remove debug border */
+         
           transform: translate(-50%, 0) scale(var(--ui-scale)) !important;
           transform-origin: center top !important;
           width: calc(100% * var(--ui-scale-inverse)) !important;
-          height: calc(100% * var(--ui-scale-inverse)) !important;
-          max-height: calc(95vh * var(--ui-scale-inverse)) !important;
+          height: auto !important; /* Changed from fixed height */
+          min-height: calc(90vh * var(--ui-scale-inverse)) !important;
+          max-height: calc(100vh * var(--ui-scale-inverse)) !important;
           position: absolute !important;
+          overflow: visible !important; /* Changed from scroll */
           left: 50% !important;
           top: 0 !important;
-          
-          /* Keep scrollbar constant size */
-          scrollbar-width: thin !important; /* For Firefox */
+          background-color: white !important;
         }
 
         .scale-modal-content::-webkit-scrollbar {
@@ -220,18 +221,54 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
           width: 100%;
           height: 100%;
           display: flex;
-          align-items: center; /* Center vertically */
-          justify-content: center; /* Center horizontally */
-          overflow: hidden;
+          align-items: flex-start; /* Changed from center to flex-start */
+          justify-content: center;
+          overflow: auto; /* Changed from hidden to auto */
         }
 
-        /* Disable scale on mobile */
+        /* Add tablet specific fixes */
+        @media (min-width: 768px) and (max-width: 1024px) {
+          .scale-modal-content {
+            display: flex !important;
+            flex-direction: column !important;
+          }
+          
+          .scale-modal-content > div {
+            width: 100% !important;
+            max-width: 100% !important;
+          }
+        }
+
+        /* Special exception for modal content */
         body.is-mobile .scale-modal-content {
-          transform: none !important;
-          width: 100% !important;
-          height: auto !important;
-          position: relative !important;
-          left: auto !important;
+          /* Override the general rule for scale-positioned */
+          transform: translate(-50%, 0) scale(var(--ui-scale)) !important;
+        }
+
+        /* Disable scale and transform on mobile */
+        @media (max-width: 767px) {
+          .scale-modal-content {
+            /* Apply FIXED transform on mobile - set explicit values */
+            transform: translate(-50%, 0) scale(var(--ui-scale)) !important;
+            transform-origin: center top !important;
+            width: calc(100% * var(--ui-scale-inverse)) !important;
+            height: auto !important;
+            position: absolute !important; /* Keep as absolute */
+            left: 50% !important;
+            top: 0 !important; /* Keep at 0 */
+            min-height: calc(90vh * var(--ui-scale-inverse)) !important;
+            max-height: calc(95vh * var(--ui-scale-inverse)) !important;
+            overflow: visible !important;
+            background-color: white !important;
+          }
+          
+          /* Fix container size */
+          .modal-scale-container {
+            height: 100% !important;
+            overflow-y: auto !important;
+            overscroll-behavior: contain !important;
+            position: relative !important;
+          }
         }
       `;
     };
