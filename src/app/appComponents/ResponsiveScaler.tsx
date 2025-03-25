@@ -195,10 +195,9 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
           min-height: calc(90vh * var(--ui-scale-inverse)) !important;
           max-height: calc(100vh * var(--ui-scale-inverse)) !important;
           position: absolute !important;
-          overflow: visible !important; /* Changed from scroll */
+          overflow: visible; /* Changed from scroll */
           left: 50% !important;
           top: 0 !important;
-          background-color: white !important;
         }
 
         .scale-modal-content::-webkit-scrollbar {
@@ -226,6 +225,15 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
           overflow: auto; /* Changed from hidden to auto */
         }
 
+        /* Disable scale on mobile */
+        body.is-mobile .scale-modal-content {
+          transform: none !important;
+          width: 100% !important;
+          height: auto !important;
+          position: relative !important;
+          left: auto !important;
+        }
+
         /* Add tablet specific fixes */
         @media (min-width: 768px) and (max-width: 1024px) {
           .scale-modal-content {
@@ -239,36 +247,38 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
           }
         }
 
-        /* Special exception for modal content */
-        body.is-mobile .scale-modal-content {
-          /* Override the general rule for scale-positioned */
-          transform: translate(-50%, 0) scale(var(--ui-scale)) !important;
-        }
-
         /* Disable scale and transform on mobile */
         @media (max-width: 767px) {
           .scale-modal-content {
-            /* Apply FIXED transform on mobile - set explicit values */
-            transform: translate(-50%, 0) scale(var(--ui-scale)) !important;
-            transform-origin: center top !important;
-            width: calc(100% * var(--ui-scale-inverse)) !important;
-            height: auto !important;
-            position: absolute !important; /* Keep as absolute */
-            left: 50% !important;
-            top: 0 !important; /* Keep at 0 */
-            min-height: calc(90vh * var(--ui-scale-inverse)) !important;
-            max-height: calc(95vh * var(--ui-scale-inverse)) !important;
-            overflow: visible !important;
-            background-color: white !important;
-          }
-          
-          /* Fix container size */
-          .modal-scale-container {
-            height: 100% !important;
-            overflow-y: auto !important;
-            overscroll-behavior: contain !important;
-            position: relative !important;
-          }
+    /* Keep scaling but adjust for mobile */
+    transform: translate(-50%, 0) scale(var(--ui-scale)) !important;
+    transform-origin: center top !important;
+    width: calc(100% * var(--ui-scale-inverse)) !important;
+    height: auto !important;
+    left: 50% !important;
+    top: 0 !important;
+    padding: 12px 8px !important;
+    /* Fixed heights */
+    min-height: calc(90vh * var(--ui-scale-inverse)) !important;
+    max-height: calc(95vh * var(--ui-scale-inverse)) !important;
+    overflow: auto !important;
+  }
+  
+  .modal-scale-container {
+    height: 95vh !important;
+    overflow-y: auto !important;
+  }
+  
+  /* Force column layout on mobile */
+  .scale-modal-content > div.flex {
+    flex-direction: column !important;
+  }
+  
+  /* Ensure all content areas take full width */
+  .scale-modal-content > div > div {
+    width: 100% !important;
+    max-width: none !important;
+  }
         }
       `;
     };
