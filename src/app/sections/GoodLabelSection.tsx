@@ -6,6 +6,7 @@ import { Button } from "../../components/ui/button";
 import { useGetAllProductsQuery } from "../apiServices/productServices";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import Link from "next/link";
 
 interface sectionProps {
   isButtonVisible: boolean;
@@ -17,7 +18,10 @@ const GoodLabelSection = ({ isButtonVisible, data }: sectionProps) => {
     data: productData,
     error,
     isLoading,
-  } = useGetAllProductsQuery(undefined, {});
+  } = useGetAllProductsQuery(undefined, {
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
   console.log(productData);
   const count = useSelector((state: RootState) => state.globalState.value);
   console.log(count);
@@ -36,12 +40,15 @@ const GoodLabelSection = ({ isButtonVisible, data }: sectionProps) => {
 
       <div className="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 flex-wrap gap-[20px] md:!gap-[24px] my-[12px] md:my-[32px] justify-start md:justify-center">
         {data?.map((card, index) => (
-          <Card
-            key={index}
-            title={card.title}
-            description={card.description}
-            isHighlighted={card.isHighlighted}
-          />
+          <Link href={`/detail/${card?.id}`} key={index}>
+            <Card
+              id={card.id}
+              key={index}
+              title={card.title}
+              description={card.description}
+              isHighlighted={card.isHighlighted}
+            />
+          </Link>
         ))}
       </div>
       <footer className="flex justify-center items-center">

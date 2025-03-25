@@ -3,7 +3,6 @@ import React from "react";
 import { FaLinkedin, FaInstagram } from "react-icons/fa";
 import Logo from "../appComponents/common/Logo";
 import { FaXTwitter } from "react-icons/fa6";
-import { useGetAllProductsQuery } from "../apiServices/productServices";
 
 const Footer = () => {
   const socialLinks = [

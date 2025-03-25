@@ -6,62 +6,74 @@ import Banner from "../sections/Banner";
 const Index = () => {
   const firstSectionData = [
     {
-      title: "Title",
+      id: "1",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      title: "Title",
+      id: "2",
+      title: "title",
       description: "A small description",
       isHighlighted: true,
     },
     {
-      title: "Title",
+      id: "3",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      title: "Title",
+      id: "4",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      title: "Title",
+      id: "5",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      title: "Title",
+      id: "6",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      title: "Title",
+      id: "7",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      title: "Title",
+      id: "8",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      title: "Title",
+      id: "9",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      title: "Title",
+      id: "10",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      title: "Title",
+      id: "11",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      title: "Title",
+      id: "12",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
@@ -69,22 +81,26 @@ const Index = () => {
 
   const secondSectionData = [
     {
-      title: "Title",
+      id: "13",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      title: "Title",
+      id: "14",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      title: "Title",
+      id: "15",
+      title: "title",
       description: "A small description",
       isHighlighted: true,
     },
     {
-      title: "Title",
+      id: "16",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
@@ -92,22 +108,26 @@ const Index = () => {
 
   const thirdSectionData = [
     {
-      title: "Title",
+      id: "17",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      title: "Title",
+      id: "18",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      title: "Title",
+      id: "19",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      title: "Title",
+      id: "20",
+      title: "title",
       description: "A small description",
       isHighlighted: true,
     },
@@ -115,22 +135,26 @@ const Index = () => {
 
   const fourthSectionData = [
     {
-      title: "Title",
+      id: "20",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      title: "Title",
+      id: "1",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      title: "Title",
+      id: "1",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      title: "Title",
+      id: "1",
+      title: "title",
       description: "A small description",
       isHighlighted: false,
     },

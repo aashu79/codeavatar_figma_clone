@@ -1,4 +1,5 @@
 export interface CardProps {
+  id: string | number;
   title: string;
   description: string;
   isHighlighted?: boolean;

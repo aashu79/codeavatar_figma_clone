@@ -77,7 +77,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="relative z-50" ref={navbarRef}>
+    <div className="relative z-50 bg-white" ref={navbarRef}>
       <nav className="flex flex-col ">
         {/* Desktop Navbar */}
         <div className="hidden lg:flex justify-between items-center px-12 py-4 w-full border-b">

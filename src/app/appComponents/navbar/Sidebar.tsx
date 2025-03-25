@@ -23,53 +23,45 @@ const Sidebar = ({
     setExpandedMenu(expandedMenu === menuId ? null : menuId);
   };
 
-  // Enhanced body scroll lock when sidebar is open
   useEffect(() => {
-    const originalStyle = window.getComputedStyle(document.body).overflow;
-    const originalPosition = window.getComputedStyle(document.body).position;
-    const originalTop = window.getComputedStyle(document.body).top;
+    const body = document.body;
+    const originalStyle = {
+      overflow: body.style.overflow,
+      position: body.style.position,
+      top: body.style.top,
+      width: body.style.width,
+    };
     const scrollY = window.scrollY;
 
     if (isOpen) {
-      // Save current scroll position and lock the body
-      document.body.style.overflow = "hidden";
-      document.body.style.position = "fixed";
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = "100%";
+      body.style.overflow = "hidden";
+      body.style.position = "fixed";
+      body.style.top = `-${scrollY}px`;
+      body.style.width = "100%";
     } else {
-      // Restore original styles and scroll position
-      document.body.style.overflow = originalStyle;
-      document.body.style.position = originalPosition;
-      document.body.style.top = originalTop;
+      body.style.overflow = originalStyle.overflow;
+      body.style.position = originalStyle.position;
+      body.style.top = originalStyle.top;
+      body.style.width = originalStyle.width;
 
-      // Only scroll if we had stored a position
-      if (document.body.style.top) {
-        const scrollY = parseInt(document.body.style.top || "0") * -1;
-        document.body.style.top = "";
-        window.scrollTo(0, scrollY);
+      if (body.style.top) {
+        window.scrollTo(0, -parseInt(body.style.top || "0"));
+        body.style.top = "";
       }
     }
 
     return () => {
-      // Clean up - restore original body style
-      document.body.style.overflow = originalStyle;
-      document.body.style.position = originalPosition;
-      document.body.style.top = originalTop;
-      document.body.style.width = "";
+      body.style.overflow = originalStyle.overflow;
+      body.style.position = originalStyle.position;
+      body.style.top = originalStyle.top;
+      body.style.width = originalStyle.width;
 
-      // Restore scroll position on unmount
-      if (document.body.style.top) {
-        const scrollY = parseInt(document.body.style.top || "0") * -1;
-        document.body.style.top = "";
-        window.scrollTo(0, scrollY);
+      if (body.style.top) {
+        window.scrollTo(0, -parseInt(body.style.top || "0"));
+        body.style.top = "";
       }
     };
   }, [isOpen]);
-
-  // Prevent event propagation to parent elements
-  const handleSidebarClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-  };
 
   return (
     <>
@@ -100,7 +92,6 @@ const Sidebar = ({
               top: `${navbarHeight}px`,
               height: `calc(100vh - ${navbarHeight}px)`,
             }}
-            onClick={handleSidebarClick}
           >
             <div className="h-full flex flex-col">
               {/* Sidebar Content */}

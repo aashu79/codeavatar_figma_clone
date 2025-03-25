@@ -19,7 +19,6 @@ const axiosBaseQuery =
   > =>
   async ({ url, method = "GET", body, params }) => {
     try {
-      // Use request_maker to make the API call
       const response = await request_maker({
         url,
         method,

@@ -180,6 +180,59 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
         footer {
           flex-shrink: 0;
         }
+
+        /* 
+         * Special scaling class for modal/dialog content
+         * Handles the unique positioning requirements of modals
+         */
+        .scale-modal-content {
+          /* Fix the transform by separating scale and translate with proper ordering */
+          transform: translate(-50%, 0) scale(var(--ui-scale)) !important;
+          transform-origin: center top !important;
+          width: calc(100% * var(--ui-scale-inverse)) !important;
+          height: calc(100% * var(--ui-scale-inverse)) !important;
+          max-height: calc(95vh * var(--ui-scale-inverse)) !important;
+          position: absolute !important;
+          left: 50% !important;
+          top: 0 !important;
+          
+          /* Keep scrollbar constant size */
+          scrollbar-width: thin !important; /* For Firefox */
+        }
+
+        .scale-modal-content::-webkit-scrollbar {
+          width: 8px !important;
+          background-color: transparent;
+        }
+
+        .scale-modal-content::-webkit-scrollbar-thumb {
+          background-color: #888;
+          border-radius: 4px;
+        }
+
+        .scale-modal-content::-webkit-scrollbar-track {
+          background-color: transparent;
+        }
+
+        /* Modal wrapper to provide proper containment */
+        .modal-scale-container {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center; /* Center vertically */
+          justify-content: center; /* Center horizontally */
+          overflow: hidden;
+        }
+
+        /* Disable scale on mobile */
+        body.is-mobile .scale-modal-content {
+          transform: none !important;
+          width: 100% !important;
+          height: auto !important;
+          position: relative !important;
+          left: auto !important;
+        }
       `;
     };
 
