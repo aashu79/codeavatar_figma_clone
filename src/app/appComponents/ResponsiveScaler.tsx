@@ -247,7 +247,7 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
             min-height: auto !important;
             max-height: none !important;
             overflow: visible !important;
-            padding-bottom: 40px !important;
+          
           }
           
           /* Ensure mobile modal has full content width */
@@ -261,6 +261,31 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
             overflow: hidden !important;
             position: fixed !important;
             width: 100% !important;
+          }
+        }
+
+        /* Add this to your ResponsiveScaler.tsx styles */
+        body.modal-open {
+          overflow: hidden !important;
+        }
+
+        /* Make sure the scale-modal-content doesn't conflict with positioning */
+        .scale-modal-content {
+          transform: translate(-50%, 0) scale(var(--ui-scale)) !important;
+          transform-origin: center top !important;
+          width: calc(100% * var(--ui-scale-inverse)) !important;
+          position: absolute !important;
+          left: 50% !important;
+          top: 0 !important;
+        }
+
+        /* Mobile view adjustments */
+        @media (max-width: 767px) {
+          .scale-modal-content {
+            transform: none !important;
+            width: 100% !important;
+            position: relative !important;
+            left: auto !important;
           }
         }
       `;

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { Eye, Share2, ExternalLink, X } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
@@ -13,15 +13,10 @@ import ThumbnailCarousel from "../../appComponents/detail/ThumbnailCarousel";
 const Page = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [open, setOpen] = useState(false);
-  const mounted = useRef(false);
-
   const router = useRouter();
   const pathname = usePathname();
 
-  const scrollYRef = useRef(0);
-  const isNavigatingRef = useRef(false);
-
-  // Sample data
+  // Sample data unchanged
   const content = {
     title: "Title",
     subtitle: "A small description",
@@ -34,6 +29,7 @@ const Page = () => {
   };
 
   const mediaItems = [
+    // Media items remain unchanged
     {
       id: 1,
       thumbnail:
@@ -61,56 +57,35 @@ const Page = () => {
     },
   ];
 
-  // Improved modal opening logic that only triggers for detail routes
+  // Simplified modal opening logic
   useEffect(() => {
     if (pathname && pathname.includes("/detail/")) {
-      // Store scroll position
-      scrollYRef.current = window.scrollY;
-
-      // Lock body scroll
-      document.body.style.position = "fixed";
-      document.body.style.top = `-${scrollYRef.current}px`;
-      document.body.style.width = "100%";
-      document.body.style.overflow = "hidden";
+      // Simply prevent scrolling without position changes
       document.body.classList.add("modal-open");
+      document.body.style.overflow = "hidden";
 
       // Open the modal
       setOpen(true);
-      mounted.current = true;
 
       return () => {
-        if (!isNavigatingRef.current) {
-          cleanupBodyStyles();
-        }
+        // Simple cleanup
+        document.body.classList.remove("modal-open");
+        document.body.style.overflow = "";
       };
     }
   }, [pathname]);
 
-  // Helper function to clean up body styles
-  const cleanupBodyStyles = () => {
-    document.body.style.position = "";
-    document.body.style.top = "";
-    document.body.style.width = "";
-    document.body.style.overflow = "";
-    document.body.classList.remove("modal-open");
-    window.scrollTo(0, scrollYRef.current);
-  };
-
-  // Fixed close modal function - proper order of operations
+  // Simple close modal function
   const closeModal = () => {
-    isNavigatingRef.current = true;
+    // First remove modal-specific styles
+    document.body.classList.remove("modal-open");
+    document.body.style.overflow = "";
 
+    // Close modal
+    setOpen(false);
+
+    // Navigation
     router.push("/");
-
-    cleanupBodyStyles();
-
-    setTimeout(() => {
-      setOpen(false);
-
-      setTimeout(() => {
-        isNavigatingRef.current = false;
-      }, 100);
-    }, 50);
   };
 
   return (
@@ -129,7 +104,7 @@ const Page = () => {
           <DialogContent
             onPointerDownOutside={(e) => e.preventDefault()}
             onInteractOutside={(e) => e.preventDefault()}
-            className="flex-1 bg-white rounded-t-xl m-0 p-0 shadow-none  overflow-hidden pointer-events-auto"
+            className="flex-1 bg-white rounded-t-xl m-0 p-0 shadow-none overflow-hidden pointer-events-auto"
             style={{
               width: "100vw",
               height: "95vh",
@@ -140,7 +115,7 @@ const Page = () => {
           >
             <DialogTitle></DialogTitle>
 
-            {/* Proper modal container for scale-modal-content */}
+            {/* Modal container */}
             <div className="modal-scale-container w-full h-full overflow-auto">
               <button
                 onClick={closeModal}
@@ -153,10 +128,11 @@ const Page = () => {
                 />
               </button>
 
-              {/* Keep existing content structure */}
-              <div className="scale-modal-content  lg:justify-center flex flex-col md:flex-row gap-[30px] md:gap-[50px] lg:gap-[67px] pt-[64px] pb-2 px-[20px] md:px-[24px] md:py-[48px] lg:px-[184px] lg:py-[40px] relative">
-                {/* Left section - Media Display */}
-                <div className="w-full md:w-3/5 lg:max-w-3/4 min-w-0">
+              {/* Content structure - unchanged */}
+              <div className="scale-modal-content lg:justify-center flex flex-col md:flex-row gap-[30px] md:gap-[50px] lg:gap-[67px] pt-[68px] pb-2 px-[24px] md:px-[24px] md:py-[48px] lg:px-[184px] lg:py-[40px] relative">
+                {/* Content structure remains the same */}
+                {/* Left section */}
+                <div className="w-full md:w-full lg:max-w-[1091px] min-w-0">
                   <div className="flex flex-col h-full gap-2">
                     <ThumbnailCarousel
                       mediaItems={mediaItems}
@@ -175,8 +151,8 @@ const Page = () => {
                   </div>
                 </div>
 
-                {/* Right sidebar - added flex-shrink-0 and md width */}
-                <div className="w-full md:w-2/5 lg:max-w-[394px] md:flex-shrink-0  ">
+                {/* Right sidebar */}
+                <div className="w-full md:w-2/5 lg:max-w-[394px] md:flex-shrink-0">
                   <div className="flex flex-col h-full gap-8">
                     {/* Title and profile section */}
                     <div className="flex flex-col gap=[16px] md:flex-row md:justify-between  lg:flex-col lg:gap-6">
@@ -209,7 +185,7 @@ const Page = () => {
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <path
-                              d="M17.5 9.58398C17.5 13.9590 13.75 17.5006 10 17.5006C9.01812 17.5006 8.07625 17.3023 7.20312 16.9356C5.00312 16.9356 3.125 17.5006 1.94937 18.3765C1.88688 18.4231 1.81438 18.3998 1.8125 18.3231C1.80238 18.2384 1.79825 18.1531 1.8 18.0681C1.95 16.8340 2.45 14.9590 3.4375 13.9673C2.58125 12.7965 2.5 11.5156 2.5 9.58398C2.5 5.20898 6.25 1.66732 10 1.66732C13.75 1.66732 17.5 5.20898 17.5 9.58398Z"
+                              d="M17.5 9.58398C17.5 13.959 13.75 17.5006 10 17.5006C9.01812 17.5006 8.07625 17.3023 7.20312 16.9356C5.00312 16.9356 3.125 17.5006 1.94937 18.3765C1.88688 18.4231 1.81438 18.3998 1.8125 18.3231C1.80238 18.2384 1.79825 18.1531 1.8 18.0681C1.95 16.834 2.45 14.959 3.4375 13.9673C2.58125 12.7965 2.5 11.5156 2.5 9.58398C2.5 5.20898 6.25 1.66732 10 1.66732C13.75 1.66732 17.5 5.20898 17.5 9.58398Z"
                               stroke="#262626"
                               strokeWidth="1.5"
                               strokeLinecap="round"
