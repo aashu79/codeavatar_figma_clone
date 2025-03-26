@@ -92,20 +92,18 @@ const Page = () => {
   const closeModal = () => {
     setOpen(false);
 
-    setTimeout(() => {
-      // Get the scroll position from body.style.top
-      const scrollY = parseInt(document.body.style.top || "0") * -1;
+    // setTimeout(() => {
+    // Get the scroll position from body.style.top
+    const scrollY = parseInt(document.body.style.top || "0") * -1;
 
-      // Reset body styles
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.width = "";
-      document.body.style.overflow = "";
+    // Reset body styles
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.width = "";
+    document.body.style.overflow = "";
 
-      // Restore scroll position before navigating
-      window.scrollTo(0, scrollY);
-      router.push("/");
-    }, 600);
+    router.push("/");
+    // }, 100);
   };
 
   useEffect(() => {
@@ -166,7 +164,7 @@ const Page = () => {
       </AnimatePresence>
 
       {/* Dialog container */}
-      <div className="fixed inset-0 z-[10000] overflow-hidden flex flex-col pointer-events-none">
+      <div className="fixed inset-0 z-[10000] overflow-hidden flex flex-col pointer-events-none ">
         {/* Top area showing a bit of navbar */}
         <div className="h-10 w-full bg-transparent pointer-events-none"></div>
 
