@@ -40,7 +40,7 @@ const ThumbnailCarousel: React.FC<ThumbnailCarouselProps> = ({
       {/* Thumbnails section */}
       <div className="p-4">
         <div className="max-w-7xl mx-auto">
-          <div className="flex gap-3 overflow-x-auto pb-2">
+          <div className="flex gap-3 justify-center overflow-x-auto pb-2">
             {mediaItems.map((item, index) => (
               <button
                 key={item.id}

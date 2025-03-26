@@ -77,14 +77,12 @@ const Page = () => {
 
   // Simple close modal function
   const closeModal = () => {
-    // First remove modal-specific styles
     document.body.classList.remove("modal-open");
     document.body.style.overflow = "";
 
     // Close modal
     setOpen(false);
 
-    // Navigation
     router.push("/");
   };
 
@@ -97,9 +95,6 @@ const Page = () => {
     >
       {/* Dialog container */}
       <div className="fixed inset-0 z-[10000] overflow-hidden flex flex-col pointer-events-none">
-        {/* Top area showing a bit of navbar */}
-        <div className="h-10 w-full bg-transparent pointer-events-none"></div>
-
         {open && (
           <DialogContent
             onPointerDownOutside={(e) => e.preventDefault()}
@@ -107,10 +102,10 @@ const Page = () => {
             className="flex-1 bg-white rounded-t-xl m-0 p-0 shadow-none overflow-hidden pointer-events-auto"
             style={{
               width: "100vw",
-              height: "95vh",
+              height: "100vh",
               position: "absolute",
               backgroundColor: "white",
-              top: "2.5vh",
+              top: "5vh",
             }}
           >
             <DialogTitle></DialogTitle>
@@ -129,7 +124,7 @@ const Page = () => {
               </button>
 
               {/* Content structure - unchanged */}
-              <div className="scale-modal-content lg:justify-center flex flex-col md:flex-row gap-[30px] md:gap-[50px] lg:gap-[67px] pt-[68px] pb-2 px-[24px] md:px-[24px] md:py-[48px] lg:px-[184px] lg:py-[40px] relative">
+              <div className="scale-modal-content lg:justify-center flex flex-col md:flex-row gap-[30px] md:gap-[50px] lg:gap-[67px] pt-[64px] pb-2 px-[20px] md:px-[24px] md:py-[68px] lg:px-[184px] lg:py-[40px] relative">
                 {/* Content structure remains the same */}
                 {/* Left section */}
                 <div className="w-full md:w-full lg:max-w-[1091px] min-w-0">
@@ -140,7 +135,7 @@ const Page = () => {
                       onSelectThumbnail={setActiveIndex}
                     />
 
-                    <div className="hidden lg:block">
+                    <div className="hidden lg:block mb-7">
                       <h2 className="text-neutral-800 text-xl font-semibold mb-4">
                         Title
                       </h2>
@@ -272,11 +267,11 @@ const Page = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="block lg:hidden my-[20.45px]">
+                  <div className="block lg:hidden my-[20.45px] ">
                     <h2 className="text-neutral-800 text-xl font-semibold mb-4">
                       Title
                     </h2>
-                    <p className="text-neutral-600 text-base">
+                    <p className="text-neutral-600 text-base  p-1">
                       {content.description}
                     </p>
                   </div>
