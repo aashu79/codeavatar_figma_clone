@@ -70,7 +70,7 @@ const Page = () => {
 
     // Apply fixed positioning to body without jumping
     document.body.style.position = "fixed";
-    document.body.style.top = `-${scrollY}px`;
+    // document.body.style.top = `-${scrollY}px`;
     document.body.style.width = "100%";
     document.body.style.overflow = "hidden";
 
@@ -84,7 +84,7 @@ const Page = () => {
       document.body.style.top = "";
       document.body.style.width = "";
       document.body.style.overflow = "";
-      window.scrollTo(0, scrollY);
+      // window.scrollTo(0, scrollY);
     };
   }, []);
 
@@ -92,18 +92,20 @@ const Page = () => {
   const closeModal = () => {
     setOpen(false);
 
-    // setTimeout(() => {
-    // Get the scroll position from body.style.top
-    const scrollY = parseInt(document.body.style.top || "0") * -1;
+    setTimeout(() => {
+      // Get the scroll position from body.style.top
+      const scrollY = parseInt(document.body.style.top || "0") * -1;
 
-    // Reset body styles
-    document.body.style.position = "";
-    document.body.style.top = "";
-    document.body.style.width = "";
-    document.body.style.overflow = "";
+      // Reset body styles
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.overflow = "";
 
-    router.push("/");
-    // }, 100);
+      // Restore scroll position before navigating
+
+      router.push("/");
+    }, 600);
   };
 
   useEffect(() => {
@@ -164,7 +166,7 @@ const Page = () => {
       </AnimatePresence>
 
       {/* Dialog container */}
-      <div className="fixed inset-0 z-[10000] overflow-hidden flex flex-col pointer-events-none ">
+      <div className="fixed inset-0 z-[10000] overflow-hidden flex flex-col pointer-events-none">
         {/* Top area showing a bit of navbar */}
         <div className="h-10 w-full bg-transparent pointer-events-none"></div>
 
