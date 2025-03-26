@@ -115,7 +115,7 @@ const Page = () => {
           <DialogContent
             onPointerDownOutside={(e) => e.preventDefault()}
             onInteractOutside={(e) => e.preventDefault()}
-            className="flex-1 bg-white rounded-t-xl m-0 p-0 shadow-none pointer-events-auto overflow-hidden"
+            className="flex-1 bg-white rounded-t-xl m-0 p-0 shadow-none  overflow-hidden"
             style={{
               width: "100vw",
               height: "95vh",
