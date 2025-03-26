@@ -8,7 +8,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
-import ThumbnailCarousel from "../../../appComponents/detail/ThumbnailCarousel";
+import ThumbnailCarousel from "../../appComponents/detail/ThumbnailCarousel";
 
 const Page = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -17,9 +17,9 @@ const Page = () => {
 
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   const scrollYRef = useRef(0);
+  const isNavigatingRef = useRef(false);
 
   // Sample data
   const content = {
@@ -72,31 +72,45 @@ const Page = () => {
       document.body.style.top = `-${scrollYRef.current}px`;
       document.body.style.width = "100%";
       document.body.style.overflow = "hidden";
+      document.body.classList.add("modal-open");
 
       // Open the modal
       setOpen(true);
       mounted.current = true;
 
       return () => {
-        // Cleanup only if we're not in a detail route anymore
-        if (!pathname.includes("/detail/")) {
-          document.body.style.position = "";
-          document.body.style.top = "";
-          document.body.style.width = "";
-          document.body.style.overflow = "";
-          window.scrollTo(0, scrollYRef.current);
+        if (!isNavigatingRef.current) {
+          cleanupBodyStyles();
         }
       };
     }
   }, [pathname]);
 
+  // Helper function to clean up body styles
+  const cleanupBodyStyles = () => {
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.width = "";
+    document.body.style.overflow = "";
+    document.body.classList.remove("modal-open");
+    window.scrollTo(0, scrollYRef.current);
+  };
+
   // Fixed close modal function - proper order of operations
   const closeModal = () => {
-    const scrollY = scrollYRef.current;
+    isNavigatingRef.current = true;
 
-    window.scrollTo(0, scrollY);
-    setOpen(false);
     router.push("/");
+
+    cleanupBodyStyles();
+
+    setTimeout(() => {
+      setOpen(false);
+
+      setTimeout(() => {
+        isNavigatingRef.current = false;
+      }, 100);
+    }, 50);
   };
 
   return (
@@ -115,7 +129,7 @@ const Page = () => {
           <DialogContent
             onPointerDownOutside={(e) => e.preventDefault()}
             onInteractOutside={(e) => e.preventDefault()}
-            className="flex-1 bg-white rounded-t-xl m-0 p-0 shadow-none  overflow-hidden"
+            className="flex-1 bg-white rounded-t-xl m-0 p-0 shadow-none  overflow-hidden pointer-events-auto"
             style={{
               width: "100vw",
               height: "95vh",
