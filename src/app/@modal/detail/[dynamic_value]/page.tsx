@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { Eye, Share2, ExternalLink, X } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
@@ -15,13 +15,15 @@ const MotionDialogContent = motion(DialogContent);
 
 const Page = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-
   const [open, setOpen] = useState(false);
-
-  const [ready, setReady] = useState(false);
   const mounted = useRef(false);
 
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // Store scroll position for better restoration
+  const scrollYRef = useRef(0);
 
   // Sample data
   const content = {
@@ -63,87 +65,57 @@ const Page = () => {
     },
   ];
 
-  // Update the useEffect for modal opening
+  // Improved modal opening logic that only triggers for detail routes
   useEffect(() => {
-    // Store the current scroll position
-    const scrollY = window.scrollY;
+    // Check if this is a detail route
+    if (pathname && pathname.includes("/detail/")) {
+      // Store scroll position
+      scrollYRef.current = window.scrollY;
 
-    // Apply fixed positioning to body without jumping
-    document.body.style.position = "fixed";
-    // document.body.style.top = `-${scrollY}px`;
-    document.body.style.width = "100%";
-    document.body.style.overflow = "hidden";
+      // Lock body scroll
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollYRef.current}px`;
+      document.body.style.width = "100%";
+      document.body.style.overflow = "hidden";
 
-    setReady(true);
-    setOpen(true);
-    mounted.current = true;
+      // Open the modal
+      setOpen(true);
+      mounted.current = true;
 
-    return () => {
-      // Restore scroll position when modal closes
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.width = "";
-      document.body.style.overflow = "";
-      // window.scrollTo(0, scrollY);
-    };
-  }, []);
+      return () => {
+        // Cleanup only if we're not in a detail route anymore
+        if (!pathname.includes("/detail/")) {
+          document.body.style.position = "";
+          document.body.style.top = "";
+          document.body.style.width = "";
+          document.body.style.overflow = "";
+          window.scrollTo(0, scrollYRef.current);
+        }
+      };
+    }
+  }, [pathname]); // Only depend on pathname, not searchParams
 
-  // Also update the closeModal function
+  // Fixed close modal function - proper order of operations
   const closeModal = () => {
+    const scrollY = scrollYRef.current;
+    // First close the modal
+    window.scrollTo(0, scrollY);
     setOpen(false);
+    router.push("/");
 
+    // Use timeout to allow animation to complete
     setTimeout(() => {
-      // Get the scroll position from body.style.top
-      const scrollY = parseInt(document.body.style.top || "0") * -1;
-
       // Reset body styles
       document.body.style.position = "";
       document.body.style.top = "";
       document.body.style.width = "";
       document.body.style.overflow = "";
 
-      // Restore scroll position before navigating
+      // Restore scroll position
 
-      router.push("/");
-    }, 600);
+      // Navigate after everything else
+    }, 100);
   };
-
-  useEffect(() => {
-    const handleResize = () => {
-      const isMobile = window.innerWidth <= 768;
-      const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
-
-      let scaleRatio = 1;
-      if (isMobile) {
-        scaleRatio = window.innerWidth / 430;
-      } else if (isTablet) {
-        scaleRatio = window.innerWidth / 1280;
-      } else {
-        scaleRatio = Math.min(window.innerWidth / 1920, 1);
-      }
-
-      document.documentElement.style.setProperty(
-        "--ui-scale",
-        scaleRatio.toString()
-      );
-      document.documentElement.style.setProperty(
-        "--ui-scale-inverse",
-        (1 / scaleRatio).toString()
-      );
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  // Return nothing until ready to avoid flashing
-  if (!ready && !mounted.current) {
-    return null;
-  }
 
   return (
     <Dialog
@@ -175,17 +147,14 @@ const Page = () => {
             <MotionDialogContent
               onPointerDownOutside={(e) => e.preventDefault()}
               onInteractOutside={(e) => e.preventDefault()}
-              className="flex-1 bg-white rounded-t-xl m-0 p-0 shadow-none pointer-events-auto overflow-hidden max-w-none max-h-none"
+              className="flex-1 bg-white rounded-t-xl m-0 p-0 shadow-none pointer-events-auto overflow-hidden  "
               style={{
                 width: "100vw",
                 height: "95vh",
                 position: "absolute",
-                backgroundColor: "white", // Ensure this is set
+                backgroundColor: "white",
                 top: "2.5vh",
               }}
-              // initial={{ y: "100%" }}
-              // animate={{ y: 0 }}
-              // exit={{ y: "100%" }}
               transition={{
                 type: "spring",
                 damping: 25,
@@ -200,15 +169,15 @@ const Page = () => {
               <div className="modal-scale-container w-full h-full overflow-auto">
                 <button
                   onClick={closeModal}
-                  className="absolute top-0 right-6 z-50 p-1 rounded-full hover:bg-zinc-100 transition-colors"
+                  className="absolute top-1 right-6 z-50 p-1 rounded-full hover:bg-zinc-100 transition-colors"
                   aria-label="Close modal"
                 >
                   <X
                     size={20}
-                    className="text-zinc-600 hover:cursor-pointer bg-gray-100 rounded-full"
+                    className="text-zinc-600 hover:cursor-pointer bg-gray-100 rounded-full scale-positioned"
                   />
                 </button>
-                <div className="scale-modal-content flex flex-col md:flex-row gap-[30px] md:gap-[50px] lg:gap-[67px] py-[64px] px-[20px] md:px-[24px] md:py-[48px] lg:px-[120px] lg:py-[20px] relative">
+                <div className="scale-modal-content lg:justify-center flex flex-col md:flex-row gap-[30px] md:gap-[50px] lg:gap-[67px] py-[64px] px-[20px] md:px-[24px] md:py-[48px] lg:px-[184px] lg:py-[40px] relative">
                   {/* Left section - Media Display */}
                   <div className="w-full md:w-3/5 lg:max-w-3/4 min-w-0">
                     <div className="flex flex-col h-full gap-2">

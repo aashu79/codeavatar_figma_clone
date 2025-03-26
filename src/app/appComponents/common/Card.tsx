@@ -11,7 +11,7 @@ import Link from "next/link";
 const Card = ({ id, title, description, isHighlighted }: CardProps) => {
   return (
     <>
-      <Link href={`/detail/${id}`} as={`/detail/${id}`}>
+      <Link href={`/detail/${id}`}>
         <CardComponent className="rounded-lg  bg-[#f4f4f5d1]  border-none py-1     shadow-none overflow-hidden w-[100%] md:mx-auto md:!max-w-[438px]   md:!max-h-[409px] ">
           <CardHeader
             className={`p-6 shadow-sm hidden md:block  ${
