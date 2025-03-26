@@ -183,9 +183,9 @@ const Page = () => {
                 backgroundColor: "white", // Ensure this is set
                 top: "2.5vh",
               }}
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "100%" }}
+              // initial={{ y: "100%" }}
+              // animate={{ y: 0 }}
+              // exit={{ y: "100%" }}
               transition={{
                 type: "spring",
                 damping: 25,
