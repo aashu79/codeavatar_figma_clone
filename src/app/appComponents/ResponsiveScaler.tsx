@@ -230,44 +230,7 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
         }
 
         /* Fix mobile view to match behavior of tablet/desktop */
-        @media (max-width: 767px) {
-          /* New rule: Only ONE scrollable container for mobile */
-          .modal-scale-container {
-            height: 95vh !important;
-            overflow-y: auto !important;  
-            -webkit-overflow-scrolling: touch;
-            /* Ensure overlay is beneath this */
-            position: relative;
-            z-index: 10001;
-          }
-          
-          .scale-modal-content {
-            /* Remove scrolling from content, let container handle it */
-            transform: none !important;
-            position: relative !important;
-            left: auto !important;
-            width: 100% !important;
-            overflow: visible !important;
-          
-            min-height: auto !important;
-            max-height: none !important;
-          }
-          
-          /* Ensure content takes full width */
-          .scale-modal-content > div.flex {
-            flex-direction: column !important;
-          }
-          
-          .scale-modal-content > div > div {
-            width: 100% !important;
-            max-width: none !important;
-          }
-          
-          /* Fix Dialog positioning for mobile */
-          body.is-mobile .modal-backdrop {
-            z-index: 9998 !important;
-          }
-        }
+       
       `;
     };
 
