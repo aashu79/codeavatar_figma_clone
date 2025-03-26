@@ -23,7 +23,7 @@ const ThumbnailCarousel: React.FC<ThumbnailCarouselProps> = ({
         <img
           src={mediaItems[activeIndex].thumbnail}
           alt="Main display"
-          className="w-full  object-cover"
+          className="w-full h-[100%]  object-cover"
         />
         <button className="absolute w-14 h-14 rounded-full bg-zinc-400 flex items-center justify-center">
           <div className="w-8 h-8 relative">

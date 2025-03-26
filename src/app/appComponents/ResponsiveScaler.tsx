@@ -122,19 +122,15 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
           background: transparent;
         }
 
-        /* 
-         * Common scaling class for fixed/absolute elements 
-         * with a constant-width scrollbar.
-         */
+        /* Common scaling class for fixed/absolute elements */
         .scale-positioned {
           transform: scale(var(--ui-scale)) !important;
           transform-origin: top left !important;
-
-          /* Keep scrollbar constant size, ignoring the scale. */
-          scrollbar-width: thin !important; /* For Firefox */
+          scrollbar-width: thin !important;
         }
         .scale-positioned::-webkit-scrollbar {
-          width: 8px !important; /* Constant width for WebKit browsers */
+          width: 8px !important;
+          background-color: transparent;
         }
         .scale-positioned::-webkit-scrollbar-thumb {
           background-color: #888;
@@ -161,16 +157,16 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
           height: auto;
           min-height: 100vh;
           overflow-y: auto;
-          scrollbar-width: thin; /* Thin scrollbar for Firefox */
+          scrollbar-width: thin;
         }
         
-        /* Very thin scrollbar for mobile view in WebKit browsers */
+        /* Very thin scrollbar for mobile */
         body.is-mobile main.app-content::-webkit-scrollbar {
-          width: 2px; /* Very thin scrollbar */
+          width: 2px;
           background: transparent;
         }
         body.is-mobile main.app-content::-webkit-scrollbar-thumb {
-          background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent thumb */
+          background-color: rgba(0, 0, 0, 0.2);
         }
         body.is-mobile main.app-content::-webkit-scrollbar-track {
           background: transparent;
@@ -181,21 +177,16 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
           flex-shrink: 0;
         }
 
-        /* 
-         * Special scaling class for modal/dialog content
-         * Handles the unique positioning requirements of modals
-         */
+        /* Special scaling class for modal/dialog content */
         .scale-modal-content {
-          /* Remove debug border */
-         
           transform: translate(-50%, 0) scale(var(--ui-scale)) !important;
           transform-origin: center top !important;
           width: calc(100% * var(--ui-scale-inverse)) !important;
-          height: auto !important; /* Changed from fixed height */
+          height: auto !important;
           min-height: calc(90vh * var(--ui-scale-inverse)) !important;
           max-height: calc(100vh * var(--ui-scale-inverse)) !important;
           position: absolute !important;
-          overflow: visible; /* Changed from scroll */
+          overflow: visible; 
           left: 50% !important;
           top: 0 !important;
         }
@@ -220,18 +211,9 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
           width: 100%;
           height: 100%;
           display: flex;
-          align-items: flex-start; /* Changed from center to flex-start */
+          align-items: flex-start;
           justify-content: center;
-          overflow: auto; /* Changed from hidden to auto */
-        }
-
-        /* Disable scale on mobile */
-        body.is-mobile .scale-modal-content {
-          transform: none !important;
-          width: 100% !important;
-          height: auto !important;
-          position: relative !important;
-          left: auto !important;
+          overflow: auto;
         }
 
         /* Add tablet specific fixes */
@@ -247,38 +229,44 @@ const ResponsiveScaler: React.FC<ResponsiveScalerProps> = ({ children }) => {
           }
         }
 
-        /* Disable scale and transform on mobile */
+        /* Fix mobile view to match behavior of tablet/desktop */
         @media (max-width: 767px) {
+          /* New rule: Only ONE scrollable container for mobile */
+          .modal-scale-container {
+            height: 95vh !important;
+            overflow-y: auto !important;  
+            -webkit-overflow-scrolling: touch;
+            /* Ensure overlay is beneath this */
+            position: relative;
+            z-index: 10001;
+          }
+          
           .scale-modal-content {
-    /* Keep scaling but adjust for mobile */
-    transform: translate(-50%, 0) scale(var(--ui-scale)) !important;
-    transform-origin: center top !important;
-    width: calc(100% * var(--ui-scale-inverse)) !important;
-    height: auto !important;
-    left: 50% !important;
-    top: 0 !important;
-    padding: 12px 8px !important;
-    /* Fixed heights */
-    min-height: calc(90vh * var(--ui-scale-inverse)) !important;
-    max-height: calc(95vh * var(--ui-scale-inverse)) !important;
-    overflow: auto !important;
-  }
-  
-  .modal-scale-container {
-    height: 95vh !important;
-    overflow-y: auto !important;
-  }
-  
-  /* Force column layout on mobile */
-  .scale-modal-content > div.flex {
-    flex-direction: column !important;
-  }
-  
-  /* Ensure all content areas take full width */
-  .scale-modal-content > div > div {
-    width: 100% !important;
-    max-width: none !important;
-  }
+            /* Remove scrolling from content, let container handle it */
+            transform: none !important;
+            position: relative !important;
+            left: auto !important;
+            width: 100% !important;
+            overflow: visible !important;
+          
+            min-height: auto !important;
+            max-height: none !important;
+          }
+          
+          /* Ensure content takes full width */
+          .scale-modal-content > div.flex {
+            flex-direction: column !important;
+          }
+          
+          .scale-modal-content > div > div {
+            width: 100% !important;
+            max-width: none !important;
+          }
+          
+          /* Fix Dialog positioning for mobile */
+          body.is-mobile .modal-backdrop {
+            z-index: 9998 !important;
+          }
         }
       `;
     };
