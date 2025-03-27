@@ -23,8 +23,7 @@ const GoodLabelSection = ({ isButtonVisible, data }: sectionProps) => {
     refetchOnReconnect: true,
   });
   console.log(productData);
-  const count = useSelector((state: RootState) => state.globalState.value);
-  console.log(count);
+
   return (
     <section className="my-[32px] mx-[20px] md:!mx-[40px] lg:mx-[48px]">
       <header className="inline-block md:flex justify-start md:justify-center items-center">

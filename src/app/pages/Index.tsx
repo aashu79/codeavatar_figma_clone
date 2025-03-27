@@ -135,25 +135,25 @@ const Index = () => {
 
   const fourthSectionData = [
     {
-      id: "20",
+      id: "21",
       title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      id: "1",
+      id: "22",
       title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      id: "1",
+      id: "23",
       title: "title",
       description: "A small description",
       isHighlighted: false,
     },
     {
-      id: "1",
+      id: "24",
       title: "title",
       description: "A small description",
       isHighlighted: false,

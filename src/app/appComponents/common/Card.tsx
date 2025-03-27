@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 import { CardProps } from "../../../types/globalTypes";
 import {
   Card as CardComponent,
@@ -7,10 +8,23 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
 
 const Card = ({ id, title, description, isHighlighted }: CardProps) => {
+  const dispatch = useDispatch();
+  const handleViewCount = (id: number | string) => {
+    dispatch({
+      type: "globalState/increaseViewCount",
+      payload: { id: Number(id) },
+    });
+  };
+
   return (
-    <>
+    <div
+      onClick={() => {
+        handleViewCount(id);
+      }}
+    >
       <Link href={`/detail/${id}`}>
         <CardComponent className="rounded-lg  bg-[#f4f4f5d1]  border-none py-1     shadow-none overflow-hidden w-[100%] md:mx-auto md:!max-w-[438px]   md:!max-h-[409px] ">
           <CardHeader
@@ -43,7 +57,7 @@ const Card = ({ id, title, description, isHighlighted }: CardProps) => {
           </CardFooter>
         </CardComponent>
       </Link>
-    </>
+    </div>
   );
 };
 

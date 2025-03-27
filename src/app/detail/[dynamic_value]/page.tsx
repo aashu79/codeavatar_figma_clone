@@ -3,20 +3,34 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { PiShareFat } from "react-icons/pi";
+
 import { Eye, Share2, ExternalLink, X } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import ThumbnailCarousel from "../../appComponents/detail/ThumbnailCarousel";
+import Loader from "../../appComponents/common/loader/Loader";
+import { TfiShare } from "react-icons/tfi";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const Page = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const params = useParams();
+  const queryParams = useSearchParams();
+  const ref = queryParams.get("ref");
+  const { dynamic_value } = params;
 
-  // Sample data unchanged
   const content = {
     title: "Title",
     subtitle: "A small description",
@@ -57,231 +71,225 @@ const Page = () => {
     },
   ];
 
-  // Simplified modal opening logic
   useEffect(() => {
     if (pathname && pathname.includes("/detail/")) {
-      // Simply prevent scrolling without position changes
-      document.body.classList.add("modal-open");
-      document.body.style.overflow = "hidden";
-
-      // Open the modal
       setOpen(true);
-
-      return () => {
-        // Simple cleanup
-        document.body.classList.remove("modal-open");
-        document.body.style.overflow = "";
-      };
     }
   }, [pathname]);
 
-  // Simple close modal function
   const closeModal = () => {
-    document.body.classList.remove("modal-open");
-    document.body.style.overflow = "";
-
-    // Close modal
-    setOpen(false);
-
     router.push("/");
+
+    setTimeout(() => {
+      setOpen(false);
+    }, 100);
   };
 
+  const dispatch = useDispatch();
+  const handleShareCount = () => {
+    dispatch({
+      type: "globalState/increaseShareCount",
+      payload: { id: Number(dynamic_value) },
+    });
+  };
+
+  const { cardCount } = useSelector((state: RootState) => state.globalState);
+  const card = cardCount.find((card) => card.cardId === Number(dynamic_value));
+  const viewCount = card ? card.viewCount : 0;
+  const shareCount = card ? card.shareCount : 0;
+
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(open) => {
-        if (!open) closeModal();
-      }}
-    >
-      {/* Dialog container */}
-      <div className="fixed inset-0 z-[10000] overflow-hidden flex flex-col pointer-events-none">
-        {open && (
-          <DialogContent
-            onPointerDownOutside={(e) => e.preventDefault()}
-            onInteractOutside={(e) => e.preventDefault()}
-            className="flex-1 bg-white rounded-t-xl m-0 p-0 shadow-none overflow-hidden pointer-events-auto"
-            style={{
-              width: "100vw",
-              height: "100vh",
-              position: "absolute",
-              backgroundColor: "white",
-              top: "5vh",
-            }}
-          >
-            <DialogTitle></DialogTitle>
+    <>
+      <div className="h-[90vh] flex items-center justify-center">
+        <Loader />
+      </div>
+      <Dialog
+        open={open}
+        onOpenChange={(open) => {
+          if (!open) closeModal();
+        }}
+      >
+        {/* Dialog container */}
+        <div className="fixed inset-0 z-[10000] overflow-hidden flex flex-col pointer-events-none">
+          {open && (
+            <DialogContent
+              onPointerDownOutside={(e) => e.preventDefault()}
+              onInteractOutside={(e) => e.preventDefault()}
+              className="flex-1 bg-white rounded-t-xl m-0 p-0 shadow-none overflow-hidden pointer-events-auto"
+              style={{
+                width: "100vw",
+                height: "100vh",
+                position: "absolute",
+                backgroundColor: "white",
+                top: "5vh",
+              }}
+            >
+              <DialogTitle></DialogTitle>
 
-            {/* Modal container */}
-            <div className="modal-scale-container w-full h-full overflow-auto">
-              <button
-                onClick={closeModal}
-                className="absolute top-1 right-6 z-[60] p-1 rounded-full hover:bg-zinc-100 transition-colors"
-                aria-label="Close modal"
-              >
-                <X
-                  size={20}
-                  className="text-zinc-600 hover:cursor-pointer bg-gray-100 rounded-full"
-                />
-              </button>
+              {/* Modal container */}
+              <div className="modal-scale-container w-full h-full overflow-auto">
+                <button
+                  onClick={closeModal}
+                  className="absolute top-1 right-6 z-[60] p-1 rounded-full hover:bg-zinc-100 transition-colors"
+                  aria-label="Close modal"
+                >
+                  <X
+                    size={20}
+                    className="text-zinc-600 hover:cursor-pointer bg-gray-100 rounded-full"
+                  />
+                </button>
 
-              {/* Content structure - unchanged */}
-              <div className="scale-modal-content lg:justify-center flex flex-col md:flex-row gap-[30px] md:gap-[50px] lg:gap-[67px] pt-[64px] pb-2 px-[20px] md:px-[24px] md:py-[68px] lg:px-[184px] lg:py-[40px] relative">
-                {/* Content structure remains the same */}
-                {/* Left section */}
-                <div className="w-full md:w-full lg:max-w-[1091px] min-w-0">
-                  <div className="flex flex-col h-full gap-2">
-                    <ThumbnailCarousel
-                      mediaItems={mediaItems}
-                      activeIndex={activeIndex}
-                      onSelectThumbnail={setActiveIndex}
-                    />
+                {/* Content structure - unchanged */}
+                <div className="scale-modal-content lg:justify-center flex flex-col md:flex-row gap-[30px] md:gap-[50px] lg:gap-[67px] pt-[64px] pb-2 px-[20px] md:px-[24px] md:py-[68px] lg:px-[184px] lg:py-[40px] relative">
+                  {/* Content structure remains the same */}
+                  {/* Left section */}
+                  <div className="w-full md:w-full lg:max-w-[1091px] min-w-0">
+                    <div className="flex flex-col h-full gap-2">
+                      <ThumbnailCarousel
+                        mediaItems={mediaItems}
+                        activeIndex={activeIndex}
+                        onSelectThumbnail={setActiveIndex}
+                      />
 
-                    <div className="hidden lg:block mb-7">
+                      <div className="hidden lg:block mb-7">
+                        <h2 className="text-neutral-800 text-xl font-semibold mb-4">
+                          Title
+                        </h2>
+                        <p className="text-neutral-600 text-base">
+                          {content.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right sidebar */}
+                  <div className="w-full md:w-2/5 lg:max-w-[394px] md:flex-shrink-0">
+                    <div className="flex flex-col h-full gap-8">
+                      {/* Title and profile section */}
+                      <div className="flex flex-col gap=[16px] md:flex-row md:justify-between  lg:flex-col lg:gap-6">
+                        <div className="flex w-full md:w-auto items-start gap-4">
+                          <div className="w-14 h-17 rounded-lg bg-[#E5E5E5]"></div>
+                          <div>
+                            <h2 className="text-neutral-800 text-xl font-semibold">
+                              {content.title} {"  "}
+                              {dynamic_value} {"  "}
+                              {ref}
+                            </h2>
+                            <p className="text-neutral-600 text-sm">
+                              {content.subtitle}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Stats */}
+                        <div className="flex w-full md:w-auto items-center gap-1.5">
+                          <div className="flex items-center gap-2 p-1.5">
+                            <Eye size={20} className="text-neutral-800" />
+                            <span className="text-neutral-800 text-base">
+                              {viewCount}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 p-1.5">
+                            <TfiShare size={20} className="text-neutral-800" />
+                            <span className="text-neutral-800 text-base">
+                              {shareCount}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Action buttons */}
+                      <div className="flex flex-col md:flex-row lg:flex-col gap-4">
+                        <Button className="h-[52px] w-full md:w-[50%] lg:w-full bg-neutral-800 hover:bg-neutral-700 px-4 rounded-lg flex items-center justify-center gap-2">
+                          <ExternalLink size={20} className="text-neutral-50" />
+                          <span className="text-neutral-50 text-lg font-medium">
+                            Visit
+                          </span>
+                        </Button>
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            handleShareCount();
+                          }}
+                          className="h-[52px] w-full md:w-[50%] lg:w-full bg-neutral-100 hover:bg-neutral-200 border-0 px-4 rounded-lg flex items-center justify-center gap-2"
+                        >
+                          <PiShareFat size={20} className="text-neutral-800" />
+                          <span className="text-neutral-800 text-lg font-medium">
+                            Share
+                          </span>
+                        </Button>
+                      </div>
+
+                      {/* Tags section */}
+                      <div className="mb-4">
+                        <h3 className="text-neutral-800 text-base font-semibold mb-3">
+                          Title
+                        </h3>
+                        <div className="flex flex-wrap gap-2">
+                          {content.tags.map((tag, index) => (
+                            <div
+                              key={index}
+                              className={`px-2.5 py-1 rounded-full text-sm ${
+                                index === 0
+                                  ? "bg-neutral-100 text-neutral-800"
+                                  : "border border-neutral-200 text-neutral-500"
+                              }`}
+                            >
+                              {tag}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Label */}
+                      <div className="flex flex-col gap-[16px] md:gap-[24px] md:flex-row lg:flex-col justify-between">
+                        <div className="mb-4">
+                          <h3 className="text-neutral-800 text-base font-semibold mb-3">
+                            Title
+                          </h3>
+                          <div className="inline-flex px-2.5 py-1 border border-neutral-200 rounded text-neutral-800 text-sm">
+                            {content.label}
+                          </div>
+                        </div>
+
+                        {/* Social icons */}
+                        <div>
+                          <h3 className="text-neutral-800 text-base font-semibold mb-3">
+                            Title
+                          </h3>
+                          <div className="flex items-center gap-3">
+                            <button className="w-7 h-7 flex items-center justify-center">
+                              <FaLinkedin className="text-neutral-500 w-6 h-6" />
+                            </button>
+                            <button className="w-7 h-7 flex items-center justify-center">
+                              <FaXTwitter className="text-neutral-500 w-6 h-6" />
+                            </button>
+                            <button className="w-7 h-7 flex items-center justify-center">
+                              <FaFacebook className="text-neutral-500 w-6 h-6" />
+                            </button>
+                            <button className="w-7 h-7 flex items-center justify-center">
+                              <FaInstagram className="text-neutral-500 w-6 h-6" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="block lg:hidden my-[20.45px] ">
                       <h2 className="text-neutral-800 text-xl font-semibold mb-4">
                         Title
                       </h2>
-                      <p className="text-neutral-600 text-base">
+                      <p className="text-neutral-600 text-base  p-1">
                         {content.description}
                       </p>
                     </div>
                   </div>
                 </div>
-
-                {/* Right sidebar */}
-                <div className="w-full md:w-2/5 lg:max-w-[394px] md:flex-shrink-0">
-                  <div className="flex flex-col h-full gap-8">
-                    {/* Title and profile section */}
-                    <div className="flex flex-col gap=[16px] md:flex-row md:justify-between  lg:flex-col lg:gap-6">
-                      <div className="flex w-full md:w-auto items-start gap-4">
-                        <div className="w-14 h-17 rounded-lg bg-[#E5E5E5]"></div>
-                        <div>
-                          <h2 className="text-neutral-800 text-xl font-semibold">
-                            {content.title}
-                          </h2>
-                          <p className="text-neutral-600 text-sm">
-                            {content.subtitle}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Stats */}
-                      <div className="flex w-full md:w-auto items-center gap-1.5">
-                        <div className="flex items-center gap-2 p-1.5">
-                          <Eye size={20} className="text-neutral-800" />
-                          <span className="text-neutral-800 text-base">
-                            {content.views}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2 p-1.5">
-                          <svg
-                            width="20"
-                            height="20"
-                            viewBox="0 0 20 20"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M17.5 9.58398C17.5 13.959 13.75 17.5006 10 17.5006C9.01812 17.5006 8.07625 17.3023 7.20312 16.9356C5.00312 16.9356 3.125 17.5006 1.94937 18.3765C1.88688 18.4231 1.81438 18.3998 1.8125 18.3231C1.80238 18.2384 1.79825 18.1531 1.8 18.0681C1.95 16.834 2.45 14.959 3.4375 13.9673C2.58125 12.7965 2.5 11.5156 2.5 9.58398C2.5 5.20898 6.25 1.66732 10 1.66732C13.75 1.66732 17.5 5.20898 17.5 9.58398Z"
-                              stroke="#262626"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                          <span className="text-neutral-800 text-base">
-                            {content.comments}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Action buttons */}
-                    <div className="flex flex-col md:flex-row lg:flex-col gap-4">
-                      <Button className="h-[52px] w-full md:w-[50%] lg:w-full bg-neutral-800 hover:bg-neutral-700 px-4 rounded-lg flex items-center justify-center gap-2">
-                        <ExternalLink size={20} className="text-neutral-50" />
-                        <span className="text-neutral-50 text-lg font-medium">
-                          Visit
-                        </span>
-                      </Button>
-                      <Button
-                        variant="outline"
-                        className="h-[52px] w-full md:w-[50%] lg:w-full bg-neutral-100 hover:bg-neutral-200 border-0 px-4 rounded-lg flex items-center justify-center gap-2"
-                      >
-                        <Share2 size={20} className="text-neutral-800" />
-                        <span className="text-neutral-800 text-lg font-medium">
-                          Share
-                        </span>
-                      </Button>
-                    </div>
-
-                    {/* Tags section */}
-                    <div className="mb-4">
-                      <h3 className="text-neutral-800 text-base font-semibold mb-3">
-                        Title
-                      </h3>
-                      <div className="flex flex-wrap gap-2">
-                        {content.tags.map((tag, index) => (
-                          <div
-                            key={index}
-                            className={`px-2.5 py-1 rounded-full text-sm ${
-                              index === 0
-                                ? "bg-neutral-100 text-neutral-800"
-                                : "border border-neutral-200 text-neutral-500"
-                            }`}
-                          >
-                            {tag}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Label */}
-                    <div className="flex flex-col gap-[16px] md:gap-[24px] md:flex-row lg:flex-col justify-between">
-                      <div className="mb-4">
-                        <h3 className="text-neutral-800 text-base font-semibold mb-3">
-                          Title
-                        </h3>
-                        <div className="inline-flex px-2.5 py-1 border border-neutral-200 rounded text-neutral-800 text-sm">
-                          {content.label}
-                        </div>
-                      </div>
-
-                      {/* Social icons */}
-                      <div>
-                        <h3 className="text-neutral-800 text-base font-semibold mb-3">
-                          Title
-                        </h3>
-                        <div className="flex items-center gap-3">
-                          <button className="w-7 h-7 flex items-center justify-center">
-                            <FaLinkedin className="text-neutral-500 w-6 h-6" />
-                          </button>
-                          <button className="w-7 h-7 flex items-center justify-center">
-                            <FaXTwitter className="text-neutral-500 w-6 h-6" />
-                          </button>
-                          <button className="w-7 h-7 flex items-center justify-center">
-                            <FaFacebook className="text-neutral-500 w-6 h-6" />
-                          </button>
-                          <button className="w-7 h-7 flex items-center justify-center">
-                            <FaInstagram className="text-neutral-500 w-6 h-6" />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="block lg:hidden my-[20.45px] ">
-                    <h2 className="text-neutral-800 text-xl font-semibold mb-4">
-                      Title
-                    </h2>
-                    <p className="text-neutral-600 text-base  p-1">
-                      {content.description}
-                    </p>
-                  </div>
-                </div>
               </div>
-            </div>
-          </DialogContent>
-        )}
-      </div>
-    </Dialog>
+            </DialogContent>
+          )}
+        </div>
+      </Dialog>
+    </>
   );
 };
 

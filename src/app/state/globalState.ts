@@ -1,34 +1,38 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface GlobalState {
-  value: number;
+  cardCount: { cardId: number; viewCount: number; shareCount: number }[];
 }
 
 const initialState: GlobalState = {
-  value: 0,
+  cardCount: [],
 };
 
 const globalSlice = createSlice({
   name: "globalState",
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
+    increaseViewCount: (state, action: PayloadAction<{ id: number }>) => {
+      const cardId = action.payload.id;
+      const card = state.cardCount.find((card) => card.cardId === cardId);
+      if (card) {
+        card.viewCount += 1;
+      } else {
+        state.cardCount.push({ cardId: cardId, viewCount: 1, shareCount: 0 });
+      }
     },
 
-    decrement: (state) => {
-      state.value -= 1;
-    },
-
-    reset: (state) => {
-      state.value = 0;
-    },
-
-    setValue: (state, action: PayloadAction<number>) => {
-      state.value = action.payload;
+    increaseShareCount: (state, action: PayloadAction<{ id: number }>) => {
+      const cardId = action.payload.id;
+      const card = state.cardCount.find((card) => card.cardId === cardId);
+      if (card) {
+        card.shareCount += 1;
+      } else {
+        state.cardCount.push({ cardId: cardId, viewCount: 0, shareCount: 1 });
+      }
     },
   },
 });
 
-export const { increment, decrement, reset, setValue } = globalSlice.actions;
+export const { increaseViewCount, increaseShareCount } = globalSlice.actions;
 export default globalSlice.reducer;
