@@ -1,7 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface GlobalState {
-  cardCount: { cardId: number; viewCount: number; shareCount: number }[];
+export interface CardCount {
+  cardId: number;
+  viewCount: number;
+  shareCount: number;
+}
+
+export interface GlobalState {
+  cardCount: CardCount[];
 }
 
 const initialState: GlobalState = {

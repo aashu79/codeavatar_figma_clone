@@ -5,7 +5,7 @@ import { FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { PiShareFat } from "react-icons/pi";
 
-import { Eye, Share2, ExternalLink, X } from "lucide-react";
+import { Eye, Share2, ExternalLink, X, Loader } from "lucide-react";
 import {
   useParams,
   usePathname,
@@ -15,11 +15,13 @@ import {
 
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
-import ThumbnailCarousel from "../../appComponents/detail/ThumbnailCarousel";
-import Loader from "../../appComponents/common/loader/Loader";
+
 import { TfiShare } from "react-icons/tfi";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+
+import { CardCount, GlobalState } from "../../../state/globalState";
+import ThumbnailCarousel from "../../../appComponents/detail/ThumbnailCarousel";
+import { RootState } from "../../../redux/store";
 
 const Page = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -94,7 +96,9 @@ const Page = () => {
   };
 
   const { cardCount } = useSelector((state: RootState) => state.globalState);
-  const card = cardCount.find((card) => card.cardId === Number(dynamic_value));
+  const card = cardCount.find(
+    (card: CardCount) => card.cardId === Number(dynamic_value)
+  );
   const viewCount = card ? card.viewCount : 0;
   const shareCount = card ? card.shareCount : 0;
 
