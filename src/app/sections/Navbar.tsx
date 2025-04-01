@@ -6,6 +6,8 @@ import Logo from "../appComponents/common/Logo";
 import MenuItems from "../appComponents/navbar/MenuItems";
 import SearchBar from "../appComponents/navbar/SearchBar";
 import Sidebar from "../appComponents/navbar/Sidebar";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -63,7 +65,6 @@ const Navbar = () => {
       setNavbarHeight(navbarRef.current.offsetHeight);
     }
 
-    // Update navbar height on window resize
     const handleResize = () => {
       if (navbarRef.current) {
         setNavbarHeight(navbarRef.current.offsetHeight);
@@ -75,6 +76,10 @@ const Navbar = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  const globalState = useSelector((state: RootState) => state.globalState);
+  const {
+    siteVisitors: { totalVisits },
+  } = globalState;
 
   return (
     <div className="relative z-50 bg-white" ref={navbarRef}>
@@ -83,6 +88,7 @@ const Navbar = () => {
         <div className="hidden lg:flex justify-between items-center px-12 py-4 w-full border-b">
           <section className="flex items-center gap-8">
             <Logo />
+
             <SearchBar />
             <MenuItems menuItems={menuItems} />
           </section>

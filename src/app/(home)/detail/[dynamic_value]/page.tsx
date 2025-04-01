@@ -1,25 +1,19 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { useRouter, useParams, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { PiShareFat } from "react-icons/pi";
 
-import { Eye, Share2, ExternalLink, X, Loader } from "lucide-react";
-import {
-  useParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
-
+import { Eye, ExternalLink, X, Loader } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 
 import { TfiShare } from "react-icons/tfi";
 import { useDispatch, useSelector } from "react-redux";
 
-import { CardCount, GlobalState } from "../../../state/globalState";
+import { CardCount } from "../../../state/globalState";
 import ThumbnailCarousel from "../../../appComponents/detail/ThumbnailCarousel";
 import { RootState } from "../../../redux/store";
 
@@ -29,9 +23,49 @@ const Page = () => {
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams();
-  const queryParams = useSearchParams();
-  const ref = queryParams.get("ref");
   const { dynamic_value } = params;
+
+  // Reference to track if view has been counted
+  const viewCounted = useRef(false);
+
+  const dispatch = useDispatch();
+
+  // Handle dialog opening with useEffect
+  useEffect(() => {
+    if (pathname && pathname.includes("/detail/") && !open) {
+      setOpen(true);
+    }
+  }, [pathname, open]);
+
+  // Count view only once when dialog opens
+  const handleDialogOpen = (isOpen: boolean) => {
+    setOpen(isOpen);
+
+    if (isOpen && !viewCounted.current && dynamic_value) {
+      viewCounted.current = true;
+
+      // Simple dispatch without localStorage
+      dispatch({
+        type: "globalState/increaseViewCount",
+        payload: { id: Number(dynamic_value) },
+      });
+    }
+  };
+
+  const closeModal = () => {
+    router.push("/");
+
+    setTimeout(() => {
+      setOpen(false);
+    }, 100);
+  };
+
+  const { cardCount } = useSelector((state: RootState) => state.globalState);
+  const card = cardCount.find(
+    (card: CardCount) => card.cardId === Number(dynamic_value)
+  );
+  const viewCount = card ? card.viewCount : 0;
+  const shareCount = card ? card.shareCount : 0;
 
   const content = {
     title: "Title",
@@ -45,7 +79,6 @@ const Page = () => {
   };
 
   const mediaItems = [
-    // Media items remain unchanged
     {
       id: 1,
       thumbnail:
@@ -73,21 +106,6 @@ const Page = () => {
     },
   ];
 
-  useEffect(() => {
-    if (pathname && pathname.includes("/detail/")) {
-      setOpen(true);
-    }
-  }, [pathname]);
-
-  const closeModal = () => {
-    router.push("/");
-
-    setTimeout(() => {
-      setOpen(false);
-    }, 100);
-  };
-
-  const dispatch = useDispatch();
   const handleShareCount = () => {
     dispatch({
       type: "globalState/increaseShareCount",
@@ -95,25 +113,12 @@ const Page = () => {
     });
   };
 
-  const { cardCount } = useSelector((state: RootState) => state.globalState);
-  const card = cardCount.find(
-    (card: CardCount) => card.cardId === Number(dynamic_value)
-  );
-  const viewCount = card ? card.viewCount : 0;
-  const shareCount = card ? card.shareCount : 0;
-
   return (
     <>
       <div className="h-[90vh] flex items-center justify-center">
         <Loader />
       </div>
-      <Dialog
-        open={open}
-        onOpenChange={(open) => {
-          if (!open) closeModal();
-        }}
-      >
-        {/* Dialog container */}
+      <Dialog open={open} onOpenChange={handleDialogOpen}>
         <div className="fixed inset-0 z-[10000] overflow-hidden flex flex-col pointer-events-none">
           {open && (
             <DialogContent
@@ -130,7 +135,6 @@ const Page = () => {
             >
               <DialogTitle></DialogTitle>
 
-              {/* Modal container */}
               <div className="modal-scale-container w-full h-full overflow-auto">
                 <button
                   onClick={closeModal}
@@ -143,10 +147,7 @@ const Page = () => {
                   />
                 </button>
 
-                {/* Content structure - unchanged */}
                 <div className="scale-modal-content lg:justify-center flex flex-col md:flex-row gap-[30px] md:gap-[50px] lg:gap-[67px] pt-[64px] pb-2 px-[20px] md:px-[24px] md:py-[68px] lg:px-[184px] lg:py-[40px] relative">
-                  {/* Content structure remains the same */}
-                  {/* Left section */}
                   <div className="w-full md:w-full lg:max-w-[1091px] min-w-0">
                     <div className="flex flex-col h-full gap-2">
                       <ThumbnailCarousel
@@ -166,18 +167,14 @@ const Page = () => {
                     </div>
                   </div>
 
-                  {/* Right sidebar */}
                   <div className="w-full md:w-2/5 lg:max-w-[394px] md:flex-shrink-0">
                     <div className="flex flex-col h-full gap-8">
-                      {/* Title and profile section */}
                       <div className="flex flex-col gap=[16px] md:flex-row md:justify-between  lg:flex-col lg:gap-6">
                         <div className="flex w-full md:w-auto items-start gap-4">
                           <div className="w-14 h-17 rounded-lg bg-[#E5E5E5]"></div>
                           <div>
                             <h2 className="text-neutral-800 text-xl font-semibold">
-                              {content.title} {"  "}
-                              {dynamic_value} {"  "}
-                              {ref}
+                              {content.title} {dynamic_value}
                             </h2>
                             <p className="text-neutral-600 text-sm">
                               {content.subtitle}
@@ -185,7 +182,6 @@ const Page = () => {
                           </div>
                         </div>
 
-                        {/* Stats */}
                         <div className="flex w-full md:w-auto items-center gap-1.5">
                           <div className="flex items-center gap-2 p-1.5">
                             <Eye size={20} className="text-neutral-800" />
@@ -202,7 +198,6 @@ const Page = () => {
                         </div>
                       </div>
 
-                      {/* Action buttons */}
                       <div className="flex flex-col md:flex-row lg:flex-col gap-4">
                         <Button className="h-[52px] w-full md:w-[50%] lg:w-full bg-neutral-800 hover:bg-neutral-700 px-4 rounded-lg flex items-center justify-center gap-2">
                           <ExternalLink size={20} className="text-neutral-50" />
@@ -224,7 +219,6 @@ const Page = () => {
                         </Button>
                       </div>
 
-                      {/* Tags section */}
                       <div className="mb-4">
                         <h3 className="text-neutral-800 text-base font-semibold mb-3">
                           Title
@@ -245,7 +239,6 @@ const Page = () => {
                         </div>
                       </div>
 
-                      {/* Label */}
                       <div className="flex flex-col gap-[16px] md:gap-[24px] md:flex-row lg:flex-col justify-between">
                         <div className="mb-4">
                           <h3 className="text-neutral-800 text-base font-semibold mb-3">
@@ -256,7 +249,6 @@ const Page = () => {
                           </div>
                         </div>
 
-                        {/* Social icons */}
                         <div>
                           <h3 className="text-neutral-800 text-base font-semibold mb-3">
                             Title
