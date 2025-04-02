@@ -22,8 +22,13 @@ const GoodLabelSection = ({ isButtonVisible, data }: sectionProps) => {
     refetchOnFocus: true,
     refetchOnReconnect: true,
   });
-  console.log(productData);
+  // console.log(productData);
 
+  const {
+    siteVisitors: { uniqueVisitors, totalVisits },
+    referrals,
+  } = useSelector((state: RootState) => state.globalState);
+  console.log(referrals);
   return (
     <section className="my-[32px] mx-[20px] md:!mx-[40px] lg:mx-[48px]">
       <header className="inline-block md:flex justify-start md:justify-center items-center">

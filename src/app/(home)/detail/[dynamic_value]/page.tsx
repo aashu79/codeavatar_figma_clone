@@ -1,6 +1,11 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { useRouter, useParams, usePathname } from "next/navigation";
+import {
+  useRouter,
+  useParams,
+  usePathname,
+  useSearchParams,
+} from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -23,28 +28,35 @@ const Page = () => {
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams();
+  const searchParams = useSearchParams();
   const { dynamic_value } = params;
 
-  // Reference to track if view has been counted
   const viewCounted = useRef(false);
+  const refCounted = useRef(false);
 
   const dispatch = useDispatch();
 
-  // Handle dialog opening with useEffect
   useEffect(() => {
     if (pathname && pathname.includes("/detail/") && !open) {
       setOpen(true);
     }
-  }, [pathname, open]);
 
-  // Count view only once when dialog opens
+    const refId = searchParams.get("ref");
+    if (refId && !refCounted.current) {
+      refCounted.current = true;
+      dispatch({
+        type: "globalState/recordReferral",
+        payload: { refId },
+      });
+    }
+  }, [pathname, open, searchParams, dispatch]);
+
   const handleDialogOpen = (isOpen: boolean) => {
     setOpen(isOpen);
 
     if (isOpen && !viewCounted.current && dynamic_value) {
       viewCounted.current = true;
 
-      // Simple dispatch without localStorage
       dispatch({
         type: "globalState/increaseViewCount",
         payload: { id: Number(dynamic_value) },

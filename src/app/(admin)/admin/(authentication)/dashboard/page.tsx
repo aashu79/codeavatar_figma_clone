@@ -26,7 +26,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/components/ui/simpleDialog";
 
 // Types
 interface BrokenLink {
@@ -96,7 +96,7 @@ const NotificationsPage = () => {
   ];
 
   return (
-    <div className="container mx-auto p-6 w-[100vw] h-[100vh] bg-white ">
+    <div className="w-full sm:max-w-[640px] md:max-w-[1280px] lg:max-w-[1280px] xl:max-w-[1280px] mx-auto p-6  h-[100vh] bg-white ">
       {/* Header */}
       <div className="flex items-center justify-between pb-4">
         <h1 className="text-xl font-semibold">Notifications</h1>
@@ -104,12 +104,12 @@ const NotificationsPage = () => {
 
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-4  ">
-        <TabsList className="flex space-x-2 px-2 py-6">
+        <TabsList className="flex flex-wrap gap-y-1.5 md:flex-nowrap h-auto md:max-h-[44px]  md:flex-row space-x-2 px-2 py-6 ">
           {tabItems.map((tab) => (
             <TabsTrigger
               key={tab.value}
               value={tab.value}
-              className={`py-4 px-4 bg-transparent hover:bg-transparent ${
+              className={`py-1.5 px-4 bg-transparent hover:bg-transparent ${
                 activeTab === tab.value ? "bg-gray-100" : ""
               }`}
             >
@@ -167,9 +167,11 @@ const NotificationsPage = () => {
         </Table>
 
         {/* Custom Pagination */}
-        <div className="flex items-center justify-between p-4 border-t">
-          <div className="text-sm text-gray-500">1 of 100 row(s) selected.</div>
-          <div className="flex items-center space-x-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border-t">
+          <div className="text-sm text-gray-500 mb-4 sm:mb-0">
+            1 of 100 row(s) selected.
+          </div>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center sm:space-x-4 space-y-4 sm:space-y-0 w-full sm:w-auto">
             <div className="flex items-center space-x-2">
               <span className="text-sm">Rows per page</span>
               <select
@@ -232,62 +234,54 @@ const NotificationsPage = () => {
       </div>
 
       <Dialog open={updateModalOpen} onOpenChange={setUpdateModalOpen}>
-        {updateModalOpen && (
-          <DialogContent
-            onPointerDownOutside={(e) => e.preventDefault()}
-            className="bg-white h-[auto] md:max-h-[200px] md:h-[200px] rounded-lg shadow-lg overflow-hidden pointer-events-auto border-purple-500 border-2"
-            style={{
-              width: "423px",
-              maxWidth: "423px",
+        <DialogContent
+          onPointerDownOutside={(e) => e.preventDefault()}
+          className="bg-white rounded-lg shadow-lg overflow-hidden scale-positioned border-purple-500 border-2 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] "
+        >
+          <DialogHeader className="space-y-2">
+            <DialogTitle className="text-xl font-semibold">
+              Update URL
+            </DialogTitle>
+            <DialogDescription className="text-gray-600">
+              Update new url to fix the broken url.
+            </DialogDescription>
+          </DialogHeader>
 
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          >
-            <button
-              onClick={closeModal}
-              className="absolute top-4 right-4 z-[60] p-1 rounded-full hover:bg-zinc-100 transition-colors"
-              aria-label="Close modal"
-            >
-              <X size={20} className="text-zinc-600 hover:cursor-pointer" />
-            </button>
-
-            <div className="scale-modal-content p-6">
-              <div className="flex justify-between items-center mb-4">
-                <DialogTitle className="text-xl font-semibold">
-                  Update URL
-                </DialogTitle>
-              </div>
-              <DialogDescription className="text-gray-600 mb-6">
-                Update new url to fix the broken url.
-              </DialogDescription>
-              <div className="flex space-x-2 items-center">
-                <Input
-                  value={newUrl}
-                  onChange={(e) => setNewUrl(e.target.value)}
-                  className="flex-1"
-                />
-                <Button
-                  onClick={handleUpdateUrl}
-                  className="bg-black text-white hover:bg-gray-800"
-                >
-                  Update
-                </Button>
-              </div>
-              <div className="mt-6">
-                <Button
-                  variant="outline"
-                  onClick={closeModal}
-                  className="text-black border-gray-200"
-                >
-                  Close
-                </Button>
-              </div>
+          <div className="space-y-4 mt-4">
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Input
+                value={newUrl}
+                onChange={(e) => setNewUrl(e.target.value)}
+                className="flex-1"
+                placeholder="https://ui.shadcn.com/docs/installation"
+              />
+              <Button
+                onClick={handleUpdateUrl}
+                className="bg-black text-white hover:bg-gray-800"
+              >
+                Update
+              </Button>
             </div>
-          </DialogContent>
-        )}
+
+            <div className="mt-2">
+              <Button
+                variant="outline"
+                onClick={closeModal}
+                className="text-black border-gray-200 bg-gray-100 hover:bg-gray-200"
+              >
+                Close
+              </Button>
+            </div>
+          </div>
+
+          {/* <button
+            onClick={closeModal}
+            className="absolute top-4 right-4 p-1 rounded-full hover:bg-gray-100"
+            aria-label="Close modal"
+          >
+            <X size={18} />
+          </button> */}
+        </DialogContent>
       </Dialog>
     </div>
   );

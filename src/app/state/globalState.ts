@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import * as UAParserLib from "ua-parser-js";
+import { v4 as uuidv4 } from "uuid";
 const UAParser = UAParserLib.UAParser;
 
 export interface CardCount {
@@ -15,6 +16,10 @@ export interface GlobalState {
     totalVisits: number;
     uniqueVisitors: string[];
   };
+  referrals: {
+    id: string;
+    count: number;
+  }[];
 }
 
 const initialState: GlobalState = {
@@ -23,15 +28,24 @@ const initialState: GlobalState = {
     totalVisits: 0,
     uniqueVisitors: [],
   },
+  referrals: [],
 };
 
 const getVisitorFingerprint = (): string => {
   if (typeof window === "undefined") return "server";
 
+  let visitorId = localStorage.getItem("unique_visitor_id");
+
+  if (!visitorId) {
+    visitorId = uuidv4();
+    localStorage.setItem("unique_visitor_id", visitorId);
+  }
+
   const parser = new UAParser();
   const result = parser.getResult();
 
   return [
+    visitorId,
     result.browser.name,
     result.browser.version,
     result.os.name,
@@ -86,6 +100,7 @@ const globalSlice = createSlice({
 
       if (!state.siteVisitors.uniqueVisitors.includes(fingerprint)) {
         state.siteVisitors.uniqueVisitors.push(fingerprint);
+        state.siteVisitors.totalVisits += 1;
       }
     },
 
@@ -113,6 +128,23 @@ const globalSlice = createSlice({
         card.uniqueVisitors.push(fingerprint);
       }
     },
+
+    recordReferral: (state, action: PayloadAction<{ refId: string }>) => {
+      const refId = action.payload.refId;
+
+      if (!refId) return;
+
+      const existingRef = state.referrals.find((ref) => ref.id === refId);
+
+      if (existingRef) {
+        existingRef.count += 1;
+      } else {
+        state.referrals.push({
+          id: refId,
+          count: 1,
+        });
+      }
+    },
   },
 });
 
@@ -121,6 +153,7 @@ export const {
   increaseShareCount,
   recordSiteVisit,
   recordCardVisitor,
+  recordReferral,
 } = globalSlice.actions;
 
 export default globalSlice.reducer;

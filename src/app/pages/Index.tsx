@@ -1,10 +1,7 @@
-"use client";
-import React, { useEffect } from "react";
+import React from "react";
 import HeroImageSection from "../sections/HeroImageSection";
 import GoodLabelSection from "../sections/GoodLabelSection";
 import Banner from "../sections/Banner";
-import { useDispatch } from "react-redux";
-import { recordSiteVisit } from "../state/globalState";
 
 const Index = () => {
   const firstSectionData = [
@@ -162,14 +159,6 @@ const Index = () => {
       isHighlighted: false,
     },
   ];
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      dispatch(recordSiteVisit());
-    }
-  }, [dispatch]);
 
   return (
     <>

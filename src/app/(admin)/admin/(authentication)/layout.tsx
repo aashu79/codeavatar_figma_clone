@@ -32,7 +32,7 @@ export default function AdminLayout({
           <StoreProvider>
             <main className="app-content ">
               <nav className=" border-b  px-[40px] py-[16px] border-gray-100 shadow-sm bg-gray-50">
-                <div className="flex items-center ">
+                <div className="flex gap-y-3 md:items-center flex-col md:flex-row">
                   <div className="flex items-center ">
                     <div className="bg-gray-700 text-white p-1 rounded">
                       <svg
@@ -52,7 +52,7 @@ export default function AdminLayout({
                       SoftRankings
                     </span>
                   </div>
-                  <div className="ml-[150px]">
+                  <div className="md:ml-[150px]">
                     <span className="text-gray-800 text-2xl font-medium">
                       Admin's Console
                     </span>
