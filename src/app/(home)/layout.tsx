@@ -7,6 +7,7 @@ import { StoreProvider } from "../redux/StoreProvider";
 import Navbar from "../sections/Navbar";
 import Footer from "../sections/Footer";
 import VisitorTracker from "../appComponents/VisitorTracker";
+import ChatBotWrapper from "../appComponents/ChatbotWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,6 +44,7 @@ export default function RootLayout({
             </VisitorTracker>
           </StoreProvider>
         </ResponsiveScaler>
+        <ChatBotWrapper />
       </body>
     </html>
   );
